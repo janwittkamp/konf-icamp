@@ -1,0 +1,22 @@
+[blogCategories BlogCategories]
+displayEmpty = false
+categoryPage = "blog/category"
+==
+<ul class="category-categories-list">
+	{% set className = "button" %}
+	{% if not current %}
+		{% set className = className ~ " category-categories-list-item-active" %}
+	{% endif %}
+	<li class="category-categories-list-item">
+		<a href="{{ "blog/category" | page({ slug: "" }) }}" class="{{ className }}">Alle</a>
+	</li>
+	{% for category in BlogCategories.categories %}
+		<li class="category-categories-list-item">
+			{% set className = "button" %}
+			{% if category.id == current %}
+				{% set className = className ~ " category-categories-list-item-active" %}
+			{% endif %}
+			<a href="{{ category.url }}" class="{{ className }}">{{ category.name }}</a>
+		</li>
+	{% endfor %}
+</ul>

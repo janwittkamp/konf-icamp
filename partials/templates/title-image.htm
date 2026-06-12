@@ -1,0 +1,67 @@
+{% set sizes = [
+	{w: 480, h: 420},
+	{w: 767, h: 480, screenW: 640},
+	{w: 1023, h: 520, screenW: 768},
+	{w: 1440, h: 620, minScreenW: 1024}
+] %}
+
+{% set className = "title-image" %}
+
+{% if layout == "large" %}
+	{% set className = className ~ " title-image--large" %}
+	{% set sizes = [
+		{w: 400, h: 300},
+		{w: 640, h: 400, screenW: 640},
+		{w: 768, h: 400, screenW: 768},
+		{w: 1024, h: 600, screenW: 1024},
+		{w: 1280, h: 600, screenW: 1280},
+		{w: 1440, h: 600, minScreenW: 1440}
+	] %}
+{% else %}
+	{% set className = className ~ " title-image--small" %}
+{% endif %}
+
+<div class="{{ className }}">
+	<div class="title-image-content">
+		<h1 class="title-image-heading">
+			{% if title == "Konfi-Camp" %}
+				<span class="title-image-heading-brand">Konfi-Camp</span>
+			{% elseif title|slice(0, 11) == "Konfi-Camp " %}
+				<span class="title-image-heading-brand">Konfi-Camp</span>
+				<span class="title-image-heading-year">{{ title|slice(11) }}</span>
+			{% else %}
+				{{ title }}
+			{% endif %}
+		</h1>
+		<span class="title-image-subheading">{{ subtitle }}</span>
+		{% if primary_text or secondary_text %}
+			<div class="title-image-actions">
+				{% if primary_text and primary_url %}
+					<a class="button button-primary" href="{{ primary_url }}">{{ primary_text }}</a>
+				{% endif %}
+				{% if secondary_text and secondary_url %}
+					<a class="button button-secondary" href="{{ secondary_url }}">{{ secondary_text }}</a>
+				{% endif %}
+			</div>
+		{% endif %}
+		{% if themes %}
+			<div class="title-image-themes" aria-label="Themen">
+				{% for theme in themes %}
+					{% if theme.text %}
+						<span class="title-image-theme">{{ theme.text }}</span>
+					{% endif %}
+				{% endfor %}
+			</div>
+		{% endif %}
+	</div>
+	<span class="title-image-accent" aria-hidden="true"></span>
+	{% if image %}
+		{%
+			partial "common/resized-image"
+			image=image
+			image_alt=image_alt
+			class_name="title-image-image"
+			sizes=sizes
+		%}
+{% endif %}
+</div>

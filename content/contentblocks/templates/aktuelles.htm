@@ -1,0 +1,38 @@
+[viewBag]
+title = "Aktuelles"
+canHaveChildren = 0
+==
+{variable type="text" name="title" label="Titel"}Aktuelles{/variable}
+{variable type="textarea" name="intro" label="Einleitung"}{/variable}
+{variable type="BlogCategoryPicker" name="category" label="Blog-Kategorie"}{/variable}
+{variable type="text" name="posts_per_page" label="Anzahl Blogartikel"}3{/variable}
+{variable type="text" name="link_url" label="Uebersichtslink"}{/variable}
+{variable type="text" name="link_text" label="Link Text"}Alle Neuigkeiten{/variable}
+{repeater name="items" prompt="Meldung hinzufuegen"}
+	{variable type="text" name="date" label="Datum"}{/variable}
+	{variable type="text" name="title" label="Titel"}{/variable}
+	{variable type="textarea" name="text" label="Text"}{/variable}
+	{variable type="mediafinder" name="image" label="Bild"}{/variable}
+	{variable type="text" name="image_alt" label="Alternativtext"}{/variable}
+	{variable type="text" name="link_url" label="Link URL"}{/variable}
+	{variable type="text" name="link_text" label="Link Text"}Mehr lesen{/variable}
+{/repeater}
+
+{% if __SELF__.vars.category %}
+	{% partial "blog/latestPostsCards.htm"
+		title=__SELF__.vars.title
+		intro=__SELF__.vars.intro
+		category=__SELF__.vars.category
+		limit=__SELF__.vars.posts_per_page
+		link_url=__SELF__.vars.link_url
+		link_text=__SELF__.vars.link_text
+	%}
+{% else %}
+	{% partial "templates/aktuelles"
+		title=__SELF__.vars.title
+		intro=__SELF__.vars.intro
+		items=__SELF__.vars.items
+		link_url=__SELF__.vars.link_url
+		link_text=__SELF__.vars.link_text
+	%}
+{% endif %}

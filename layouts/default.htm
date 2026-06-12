@@ -1,0 +1,21 @@
+description = "Standardlayout"
+
+[staticPage]
+useContent = 1
+default = 1
+==
+<!DOCTYPE html>
+<html lang="de" class="webp">
+    {% partial "layout/head" %}
+    <body>
+		<a class="sr-only" href="#main_content">Zum Hauptinhalt springen</a>
+		<div class="main-container">
+			{% partial "site/header" %}
+			<main id="main_content">
+				{% page %}
+			</main>
+			{# {% partial "site/privacy" %} #}
+			{% partial "layout/footer" %}
+		</div>
+	</body>
+</html>

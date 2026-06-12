@@ -1,0 +1,38 @@
+{% set image = null %}
+{% if item.image %}
+	{% set image = item.image|slice(0, 7) == "assets/" ? (item.image | theme) : (item.image | media) %}
+{% endif %}
+{% set target = item.link_url ? item.link_url : '#' %}
+<article class="aktuelles-card">
+	{% if image %}
+		<a class="aktuelles-card-image" href="{{ target }}" aria-hidden="true" tabindex="-1">
+			{%
+				partial "common/resized-image"
+				image=image
+				image_alt=item.image_alt
+				class_name="aktuelles-card-img"
+				sizes=[{w: 430, h: 270}]
+			%}
+		</a>
+	{% endif %}
+	<div class="aktuelles-card-body">
+		{% if item.date %}
+			<time class="aktuelles-card-date">{{ item.date }}</time>
+		{% endif %}
+		{% if item.title %}
+			<h3 class="aktuelles-card-title">
+				{% if item.link_url %}
+					<a href="{{ item.link_url }}">{{ item.title }}</a>
+				{% else %}
+					{{ item.title }}
+				{% endif %}
+			</h3>
+		{% endif %}
+		{% if item.text %}
+			<p class="aktuelles-card-text">{{ item.text }}</p>
+		{% endif %}
+		{% if item.link_url and item.link_text %}
+			<a class="aktuelles-card-link" href="{{ item.link_url }}">{{ item.link_text }}</a>
+		{% endif %}
+	</div>
+</article>

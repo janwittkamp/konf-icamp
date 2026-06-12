@@ -1,0 +1,75 @@
+name: "Konfi-Camp 2026"
+description: "Modernes Theme fuer die Konfi-Camp Website"
+author: "Interweber"
+homepage: "https://interweber.de"
+code: "konficamp"
+require:
+    - Interweber.Contentblocks
+    - RainLab.Pages
+    - RainLab.Blog
+form:
+  fields:
+    instagram:
+      label: Instagram-Link
+      type: text
+    facebook:
+      label: Facebook-Link
+      type: text
+    schema_name:
+      label: SEO | Name
+      type: text
+      tab: SEO
+    schema_founder:
+      label: SEO | Inhaber
+      type: text
+      tab: SEO
+    schema_description:
+      label: SEO | Beschreibung
+      type: text
+      tab: SEO
+    schema_image:
+      label: SEO | Bild
+      type: mediafinder
+      tab: SEO
+    schema_telephone:
+      label: SEO | Telefon
+      type: text
+      tab: SEO
+    schema_email:
+      label: SEO | E-Mail
+      type: text
+      tab: SEO
+    schema_street_address:
+      label: SEO | Adresse
+      type: text
+      tab: SEO
+    schema_postal_code:
+      label: SEO | PLZ
+      type: text
+      tab: SEO
+    schema_address_locality:
+      label: SEO | Ort
+      type: text
+      tab: SEO
+    schema_adress_country:
+      label: SEO | Land
+      type: text
+      tab: SEO
+    schema_price_range:
+      label: SEO | Preise
+      type: dropdown
+      tab: SEO
+      options:
+        $: $
+        $$: $$
+        $$$: $$$
+        $$$$: $$$$
+        $$$$$: $$$$$
+    contact_parking:
+      label: Parkinformationen
+      type: textarea
+      tab: SEO
+    contact_public_transport:
+      label: ÖPNV-Anbindung
+      type: textarea
+      tab: SEO

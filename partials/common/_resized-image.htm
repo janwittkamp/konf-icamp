@@ -1,0 +1,124 @@
+{% if not types %}
+	{% set types = [defaultType, "webp"] %}
+{% endif %}
+{% set mode = mode | default("crop") %}
+{% if not dimensions %}
+	{% set dimensions = getImageDimensions(image) %}
+{% endif %}
+
+{% if dimensions %}
+	{% set heigthByWidth = dimensions.height / dimensions.width %}
+	{% set widthByHeight = dimensions.width / dimensions.height %}
+{% else %}
+	{% set heigthByWidth = 0 %}
+	{% set widthByHeight = 0 %}
+{% endif %}
+
+{% if filterSizes %}
+	{% set sizes = sizes | filter(s => s.h <= dimensions.height and s.w <= dimensions.width) %}
+{% endif %}
+
+{% if sizes is empty %}
+	{% set sizes = [{w: dimensions.width, h: dimensions.height}] %}
+{% endif %}
+
+{% set maxSize = sizes|last %}
+
+<picture>
+	{% for type in types %}
+		{% set srcset = "" %}
+
+		{% for size in sizes %}
+			{# can't use 'in' here - items are objects #}
+			{% set matched = false %}
+			{% for check in sizes %}
+				{% if not matched and check.w == size.w * 2 %}
+					{% set matched = true %}
+				{% endif %}
+			{% endfor %}
+
+			{% if not size.h %}
+				{% set height = (heigthByWidth * size.w) | round(0, 'ceil') %}
+			{% elseif mode == 'fit' %}
+				{% set height = min(size.h, (heigthByWidth * size.w) | round(0, 'ceil')) %}
+			{% else %}
+				{% set height = size.h %}
+			{% endif %}
+
+			{% if not size.w %}
+				{% set width = (widthByHeight * size.h) | round(0, 'ceil') %}
+			{% elseif mode == 'fit' %}
+				{% set width = min(size.w, (widthByHeight * size.h) | round(0, 'ceil')) %}
+			{% else %}
+				{% set width = size.w %}
+			{% endif %}
+
+			{% if not matched %}
+				{% set srcset = srcset ~ "#{ image | resize(width * 2, height * 2, { mode: mode, extension: type }) } #{ width * 2 }w," %}
+			{% endif %}
+			{% set srcset = srcset ~ "#{ image | resize(width, height, { mode: mode, extension: type }) } #{ width }w" %}
+
+			{% if not loop.last %}
+				{% set srcset = srcset ~ "," %}
+			{% endif %}
+		{% endfor %}
+
+		{% set sizes_string = "" %}
+		{% for size in sizes %}
+			{% if not size.w %}
+				{% set width = (widthByHeight * size.h) | round(0, 'ceil') %}
+			{% elseif mode == 'fit' %}
+				{% set width = min(size.w, (widthByHeight * size.h) | round(0, 'ceil')) %}
+			{% else %}
+				{% set width = size.w %}
+			{% endif %}
+
+			{% set screenSize = size.screenW | default(width) %}
+			{% set sizes_string = sizes_string ~ "(max-width: #{ screenSize }px) #{ width }px" %}
+			{% set sizes_string = sizes_string ~ ",\n" %}
+
+			{% if loop.last %}
+				{% set sizes_string = sizes_string ~ "(min-width: #{ screenSize }px) #{ width }px" %}
+			{% endif %}
+		{% endfor %}
+		<source
+			{% if lazy %}
+				data-srcset="{{ srcset }}"
+			{% else %}
+				srcset="{{ srcset }}"
+				data-disable-lazy="disable"
+			{% endif %}
+			sizes="{{ sizes_string }}"
+			type="image/{{ type }}" />
+	{% endfor %}
+
+	{% if not maxSize.h %}
+		{% set height = (heigthByWidth * maxSize.w) | round(0, 'ceil') %}
+	{% elseif mode == 'fit' %}
+		{% set height = min(maxSize.h, (heigthByWidth * maxSize.w) | round(0, 'ceil')) %}
+	{% else %}
+		{% set height = maxSize.h %}
+	{% endif %}
+
+	{% if not maxSize.w %}
+		{% set width = (widthByHeight * maxSize.h) | round(0, 'ceil') %}
+	{% elseif mode == 'fit' %}
+		{% set width = min(maxSize.w, (widthByHeight * maxSize.h) | round(0, 'ceil')) %}
+	{% else %}
+		{% set width = maxSize.w %}
+	{% endif %}
+
+	<img
+		width="{{ width }}"
+		height="{{ height }}"
+		class="{{ class_name }}"
+		{% if lazy %}
+			data-src="{{ image | resize(maxSize.w, height, { mode: mode, extension: types[0] }) }}"
+		{% else %}
+			src="{{ image | resize(maxSize.w, height, { mode: mode, extension: types[0] }) }}"
+			data-disable-lazy="disable"
+		{% endif %}
+		alt="{{ image_alt }}"
+		loading="lazy"
+	/>
+</picture>

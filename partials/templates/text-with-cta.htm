@@ -1,0 +1,21 @@
+<div class="text-with-cta">
+	<div class="text-with-cta_content">
+		<span class="text-with-cta_slogan">{{ slogan }}</span>
+		<h2 class="text-with-cta_title">{{ title }}</h2>
+		<div class="text-with-cta_text fr-view">
+			{{ content | raw }}
+		</div>
+	</div>
+
+	<div class="text-with-cta_cta">
+		<div class="text-with-cta_cta-text">
+			<div class="fr-view">
+				{{ cta_content | raw }}
+			</div>
+
+			{% if link and link_title %}
+				<a href="{{ link | anyPage }}" class="button text-with-cta_link">{{ link_title }}</a>
+			{% endif %}
+		</div>
+	</div>
+</div>

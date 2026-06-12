@@ -1,0 +1,475 @@
+url = "/media"
+title = "Media"
+layout = "default"
+meta_title = "Media | Konfi-Camp"
+meta_description = "Bilder, Videos und Archivmomente aus dem Konfi-Camp."
+==
+function onStart()
+{
+    $archive = $this->buildMediaArchive();
+
+    $this['mediaArchive'] = $archive;
+}
+
+function buildMediaArchive()
+{
+    $imageBase = '/konfi-camp/bilder';
+    $videoBase = '/konfi-camp/videos';
+    $info = $this->loadMediaArchiveInfo();
+    $yearKeys = [];
+
+    foreach ($this->safeMediaList($imageBase) as $item) {
+        if ($item->type === \Media\Classes\MediaLibraryItem::TYPE_FOLDER) {
+            $yearKeys[basename($item->path)] = true;
+        }
+    }
+
+    foreach ($this->safeMediaList($videoBase) as $item) {
+        if ($item->type === \Media\Classes\MediaLibraryItem::TYPE_FOLDER) {
+            $yearKeys[basename($item->path)] = true;
+        }
+    }
+
+    $yearKeys = array_keys($yearKeys);
+    usort($yearKeys, function ($left, $right) {
+        $leftIsYear = ctype_digit((string) $left);
+        $rightIsYear = ctype_digit((string) $right);
+
+        if ($leftIsYear && $rightIsYear) {
+            return (int) $right <=> (int) $left;
+        }
+
+        if ($leftIsYear) {
+            return -1;
+        }
+
+        if ($rightIsYear) {
+            return 1;
+        }
+
+        return strnatcasecmp($left, $right);
+    });
+
+    $years = [];
+
+    foreach ($yearKeys as $yearKey) {
+        $images = $this->mapMediaImages(
+            $this->safeMediaList($imageBase . '/' . $yearKey, \Media\Classes\MediaLibraryItem::FILE_TYPE_IMAGE, true),
+            $yearKey
+        );
+        $videos = $this->mapMediaVideos($this->safeMediaList($videoBase . '/' . $yearKey, \Media\Classes\MediaLibraryItem::FILE_TYPE_VIDEO, true));
+        $yearInfo = $info[$yearKey] ?? [];
+
+        $years[$yearKey] = [
+            'key' => $yearKey,
+            'label' => ctype_digit((string) $yearKey) ? $yearKey : 'Archiv',
+            'title' => $yearInfo['title'] ?? (ctype_digit((string) $yearKey) ? 'Konfi-Camp ' . $yearKey : 'Archivmomente'),
+            'location' => $yearInfo['location'] ?? '',
+            'description' => $yearInfo['description'] ?? 'Bilder und Videos aus dem Konfi-Camp-Archiv.',
+            'images' => $images,
+            'videos' => $videos,
+            'imageCount' => count($images),
+            'videoCount' => count($videos)
+        ];
+    }
+
+    $selectedYear = (string) \Input::get('jahr', '');
+    if (!isset($years[$selectedYear])) {
+        $selectedYear = '';
+    }
+
+    return [
+        'years' => array_values($years),
+        'displayYears' => $selectedYear ? [$years[$selectedYear]] : array_values($years),
+        'selectedYear' => $selectedYear,
+        'imageTotal' => array_sum(array_column($years, 'imageCount')),
+        'videoTotal' => array_sum(array_column($years, 'videoCount')),
+        'hasMedia' => count($years) > 0,
+    ];
+}
+
+function safeMediaList($folder, $filter = null, $ignoreFolders = false)
+{
+    try {
+        return \Media\Classes\MediaLibrary::instance()->listFolderContents(
+            $folder,
+            [
+                'by' => \Media\Classes\MediaLibrary::SORT_BY_TITLE,
+                'direction' => \Media\Classes\MediaLibrary::SORT_DIRECTION_ASC
+            ],
+            $filter,
+            $ignoreFolders
+        );
+    }
+    catch (\Exception $exception) {
+        return [];
+    }
+}
+
+function mapMediaImages($items, $yearKey)
+{
+    $images = [];
+    $imageInfo = $this->loadImageArchiveInfo($yearKey);
+
+    foreach ($items as $item) {
+        $fileName = basename($item->path);
+        $detectedInfo = $this->detectImageArchiveInfo($fileName);
+        $fileInfo = $imageInfo[$fileName] ?? [];
+        $tag = $fileInfo['tag'] ?? $detectedInfo['tag'] ?? '';
+        $day = $fileInfo['day'] ?? $detectedInfo['day'] ?? '';
+        $activity = $fileInfo['activity'] ?? $detectedInfo['activity'] ?? '';
+        $title = $activity ?: $this->formatMediaTitle(pathinfo($item->title, PATHINFO_FILENAME));
+
+        $images[] = [
+            'title' => $title,
+            'activity' => $activity,
+            'tag' => $this->formatTagLabel($tag),
+            'day' => $this->formatMediaTitle($day),
+            'url' => $item->publicUrl,
+            'path' => $item->path,
+            'sortTag' => $this->getTagSortValue($tag),
+            'sortDay' => $this->getCampDaySortValue($day),
+            'sortTitle' => $title,
+            'sortFile' => $fileName
+        ];
+    }
+
+    usort($images, function ($left, $right) {
+        if ($left['sortTag'] !== $right['sortTag']) {
+            return $left['sortTag'] <=> $right['sortTag'];
+        }
+
+        if ($left['sortDay'] !== $right['sortDay']) {
+            return $left['sortDay'] <=> $right['sortDay'];
+        }
+
+        $titleCompare = strnatcasecmp($left['sortTitle'], $right['sortTitle']);
+        if ($titleCompare !== 0) {
+            return $titleCompare;
+        }
+
+        return strnatcasecmp($left['sortFile'], $right['sortFile']);
+    });
+
+    foreach ($images as &$image) {
+        unset($image['sortTag'], $image['sortDay'], $image['sortTitle'], $image['sortFile']);
+    }
+
+    return $images;
+}
+
+function mapMediaVideos($items)
+{
+    $videos = [];
+
+    foreach ($items as $item) {
+        $filename = pathinfo($item->title, PATHINFO_FILENAME);
+        $parts = explode(',', $filename);
+        $title = $parts[2] ?? $filename;
+        $day = $parts[3] ?? '';
+
+        $videos[] = [
+            'title' => $this->formatMediaTitle($title),
+            'day' => $this->formatMediaTitle($day),
+            'url' => $item->publicUrl,
+            'poster' => $this->findVideoPoster($item->path),
+            'path' => $item->path
+        ];
+    }
+
+    return $videos;
+}
+
+function findVideoPoster($videoPath)
+{
+    $folder = dirname($videoPath);
+    $baseName = pathinfo($videoPath, PATHINFO_FILENAME);
+
+    foreach (['jpg', 'jpeg', 'png', 'webp'] as $extension) {
+        $poster = $this->findMediaFile($folder . '/' . $baseName . '.' . $extension);
+        if ($poster) {
+            return $poster->publicUrl;
+        }
+    }
+
+    return null;
+}
+
+function findMediaFile($path)
+{
+    try {
+        return \Media\Classes\MediaLibrary::instance()->findFile($path);
+    }
+    catch (\Exception $exception) {
+        return null;
+    }
+}
+
+function loadMediaArchiveInfo()
+{
+    $path = storage_path('app/media/konfi-camp/archiv.json');
+
+    if (!is_file($path)) {
+        return [];
+    }
+
+    $info = json_decode(file_get_contents($path), true);
+
+    return is_array($info) ? $info : [];
+}
+
+function loadImageArchiveInfo($yearKey)
+{
+    $path = storage_path('app/media/konfi-camp/bilder/' . $yearKey . '/bilder.json');
+
+    if (!is_file($path)) {
+        return [];
+    }
+
+    $info = json_decode(file_get_contents($path), true);
+
+    if (!is_array($info)) {
+        return [];
+    }
+
+    $images = $info['images'] ?? $info;
+    $normalized = [];
+
+    foreach ($images as $key => $value) {
+        if (!is_array($value)) {
+            continue;
+        }
+
+        $file = is_string($key) ? $key : ($value['file'] ?? '');
+        $file = basename($file);
+
+        if (!$file) {
+            continue;
+        }
+
+        $normalized[$file] = [
+            'tag' => $value['tag'] ?? '',
+            'day' => $value['day'] ?? ($value['weekday'] ?? ''),
+            'activity' => $value['activity'] ?? ($value['title'] ?? '')
+        ];
+    }
+
+    return $normalized;
+}
+
+function detectImageArchiveInfo($fileName)
+{
+    $baseName = pathinfo($fileName, PATHINFO_FILENAME);
+    $normalized = strtolower(str_replace(['_', '.'], '-', $baseName));
+    $info = [
+        'tag' => '',
+        'day' => '',
+        'activity' => ''
+    ];
+
+    if (preg_match('/tag-?(\d+)/', $normalized, $matches)) {
+        $info['tag'] = 'Tag ' . $matches[1];
+    }
+
+    foreach (['montag', 'dienstag', 'mittwoch', 'donnerstag', 'freitag', 'samstag', 'sonntag'] as $weekday) {
+        if (strpos($normalized, $weekday) !== false) {
+            $info['day'] = $weekday;
+            break;
+        }
+    }
+
+    $activity = preg_replace('/\b(20\d{2}|tag|montag|dienstag|mittwoch|donnerstag|freitag|samstag|sonntag|dsc\d+|img\d+|6t1a\d+|\d{3,})\b/i', ' ', $baseName);
+    $activity = $this->formatMediaTitle($activity);
+
+    if ($activity && strlen($activity) > 2) {
+        $info['activity'] = $activity;
+    }
+
+    return $info;
+}
+
+function formatTagLabel($tag)
+{
+    $tag = trim((string) $tag);
+
+    if ($tag === '') {
+        return '';
+    }
+
+    if (preg_match('/^tag[\\s._-]*(\\d+)$/i', $tag, $matches)) {
+        return 'Tag ' . $matches[1];
+    }
+
+    if (ctype_digit($tag)) {
+        return 'Tag ' . $tag;
+    }
+
+    return $this->formatMediaTitle($tag);
+}
+
+function getTagSortValue($tag)
+{
+    if (preg_match('/(\d+)/', (string) $tag, $matches)) {
+        return (int) $matches[1];
+    }
+
+    return 999;
+}
+
+function getCampDaySortValue($day)
+{
+    $day = strtolower(trim((string) $day));
+    $days = [
+        'samstag' => 1,
+        'sonntag' => 2,
+        'montag' => 3,
+        'dienstag' => 4,
+        'mittwoch' => 5,
+        'donnerstag' => 6,
+        'freitag' => 7
+    ];
+
+    return $days[$day] ?? 999;
+}
+
+function formatMediaTitle($title)
+{
+    $title = trim(str_replace(['_', '-'], ' ', (string) $title));
+    $title = preg_replace('/\s+/', ' ', $title);
+
+    return $title ?: 'Konfi-Camp';
+}
+==
+{% set hero_image = "assets/images/konfi-camp/2025-abend-4322.jpg" | theme %}
+{%
+	partial "templates/title-image.htm"
+	image=hero_image
+	image_alt="Konfis erleben einen gemeinsamen Abend im Camp"
+	title="Media"
+	subtitle="Bilder, Videos und Erinnerungen aus dem Konfi-Camp-Archiv."
+	layout="small"
+%}
+
+<section class="media-archive" id="archiv">
+	<div class="media-archive-inner">
+		<header class="media-archive-header">
+			<span class="section-kicker">Archiv</span>
+			<h2>Momente, die bleiben</h2>
+			<p>
+				Für Eltern, Gruppen und Gemeinden: Hier sammeln wir Bilder und Videos aus den Camp-Jahren.
+				Das Archiv kann Jahr für Jahr ergänzt werden.
+			</p>
+		</header>
+
+		<div class="media-archive-overview" aria-label="Medienübersicht">
+			<a class="media-overview-card" href="#bilder">
+				<span>{{ mediaArchive.imageTotal }}</span>
+				<strong>Bilder</strong>
+				<small>Galerien aus dem Camp-Alltag</small>
+			</a>
+			<a class="media-overview-card media-overview-card--red" href="#videos">
+				<span>{{ mediaArchive.videoTotal }}</span>
+				<strong>Videos</strong>
+				<small>Rückblicke und Programmmomente</small>
+			</a>
+			<a class="media-overview-card" href="#jahre">
+				<span>{{ mediaArchive.years|length }}</span>
+				<strong>Jahre</strong>
+				<small>Archiv seit 2006 im Aufbau</small>
+			</a>
+		</div>
+
+		{% if mediaArchive.years %}
+			<nav class="media-year-nav" id="jahre" aria-label="Archivjahre">
+				<a class="media-year-pill {{ not mediaArchive.selectedYear ? 'media-year-pill--active' }}" href="/media#archiv">Alle</a>
+				{% for year in mediaArchive.years %}
+					<a
+						class="media-year-pill {{ mediaArchive.selectedYear == year.key ? 'media-year-pill--active' }}"
+						href="/media?jahr={{ year.key }}#archiv"
+					>
+						{{ year.label }}
+					</a>
+				{% endfor %}
+			</nav>
+		{% endif %}
+
+		{% if not mediaArchive.hasMedia %}
+			<div class="media-empty">
+				<h2>Noch keine Medien hochgeladen</h2>
+				<p>Das Archiv ist vorbereitet. Sobald im Backend Bilder oder Videos hinterlegt sind, erscheinen sie hier automatisch.</p>
+			</div>
+		{% endif %}
+
+		<div class="media-year-list">
+			{% for year in mediaArchive.displayYears %}
+				<article class="media-year-card" id="jahr-{{ year.key }}">
+					<div class="media-year-card-header">
+						<div>
+							<span class="media-year-kicker">{{ year.label }}</span>
+							<h2>{{ year.title }}</h2>
+							{% if year.location %}
+								<p class="media-year-location">{{ year.location }}</p>
+							{% endif %}
+						</div>
+						<div class="media-year-stats">
+							<span>{{ year.imageCount }} Bilder</span>
+							<span>{{ year.videoCount }} Videos</span>
+						</div>
+					</div>
+
+					<p class="media-year-description">{{ year.description }}</p>
+
+					{% if year.images %}
+						<section class="media-gallery-section" id="bilder">
+							<h3>Bilder</h3>
+							<div class="media-gallery-grid">
+								{% for image in year.images|slice(0, mediaArchive.selectedYear ? 99 : 12) %}
+									<a class="media-gallery-item" href="{{ image.url }}" target="_blank" rel="noopener">
+										<img src="{{ image.url }}" alt="{{ image.title }}" loading="lazy">
+										<span class="media-gallery-caption">
+											{% if image.tag or image.day %}
+												<small class="media-gallery-meta">
+													{% if image.tag %}<em>{{ image.tag }}</em>{% endif %}
+													{% if image.day %}<em>{{ image.day }}</em>{% endif %}
+												</small>
+											{% endif %}
+											<strong>
+												{% if image.activity %}{{ image.activity }}{% else %}{{ image.title }}{% endif %}
+											</strong>
+										</span>
+									</a>
+								{% endfor %}
+							</div>
+							{% if not mediaArchive.selectedYear and year.imageCount > 12 %}
+								<a class="media-show-more" href="/media?jahr={{ year.key }}#jahr-{{ year.key }}">
+									Alle {{ year.imageCount }} Bilder ansehen
+								</a>
+							{% endif %}
+						</section>
+					{% endif %}
+
+					{% if year.videos %}
+						<section class="media-video-section" id="videos">
+							<h3>Videos</h3>
+							<div class="media-video-grid">
+								{% for video in year.videos %}
+									<article class="media-video-card">
+										<video controls preload="metadata" {% if video.poster %}poster="{{ video.poster }}"{% endif %}>
+											<source src="{{ video.url }}" type="video/mp4">
+										</video>
+										<div>
+											<h4>{{ video.title }}</h4>
+											{% if video.day %}
+												<p>{{ video.day }}</p>
+											{% endif %}
+										</div>
+									</article>
+								{% endfor %}
+							</div>
+						</section>
+					{% endif %}
+				</article>
+			{% endfor %}
+		</div>
+	</div>
+</section>

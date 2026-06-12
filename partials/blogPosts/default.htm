@@ -1,0 +1,47 @@
+{% set posts = __SELF__.posts %}
+{% set masonry = __SELF__.properties.masonry %}
+{% set disablePagination = __SELF__.properties.disablePagination %}
+
+<div class="blog-posts">
+	{% for post in posts %}
+		{% set category = post.categories|filter(c => c.slug != 'alle')|first  %}
+		{% set image = post.featured_images[0] %}
+
+		<div class="blog-posts-post">
+			{% if image %}
+				<div class="blog-posts-post-image-wrap" aria-hidden="true">
+					{%
+						partial "common/resized-image"
+						image=image
+						image_alt=""
+						class_name="blog-posts-post-image"
+						sizes=[{w:430,h:310}]
+					%}
+				</div>
+			{% endif %}
+			<div class="blog-posts-post-meta">
+				{{ post.published_at|date('d. F Y') }}
+				<span class="blog-posts-post-meta-divider"></span>
+				<a class="blog-posts-post-meta-category" href="{{ category.url }}">
+					{{ category.name }}
+				</a>
+			</div>
+			<h3 class="blog-posts-post-title">
+				<a href="{{ post.url }}">{{ post.title }}</a>
+			</h3>
+			<p class="blog-posts-post-content">
+				{{ post.summary | striptags | truncate(200) }}
+			</p>
+			<a class="blog-posts-post-show button" href="{{ post.url }}">Mehr lesen</a>
+		</div>
+	{% else %}
+		<div class="blog-posts-empty">
+			Es gibt leider keine Beiträge in dieser Kategorie.
+		</div>
+	{% endfor %}
+</div>
+{% if not disablePagination %}
+	<div class="blog-posts-nav">
+		{{ posts.render | raw }}
+	</div>
+{% endif %}

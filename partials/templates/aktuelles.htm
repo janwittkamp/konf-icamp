@@ -1,0 +1,31 @@
+<section class="aktuelles-block">
+	<div class="aktuelles-block-header">
+		<div>
+			{% if title %}
+				<h2>{{ title }}</h2>
+			{% endif %}
+			{% if intro %}
+				<p>{{ intro }}</p>
+			{% endif %}
+		</div>
+		{% if link_url and link_text %}
+			<a class="button" href="{{ link_url }}">{{ link_text }}</a>
+		{% endif %}
+	</div>
+
+	<div class="aktuelles-grid">
+		{% if posts is defined %}
+			{% for post in posts %}
+				{% partial "templates/aktuelles-post-element" post=post %}
+			{% else %}
+				<div class="aktuelles-empty">
+					Aktuell sind noch keine Beiträge veröffentlicht.
+				</div>
+			{% endfor %}
+		{% else %}
+			{% for item in items %}
+				{% partial "templates/aktuelles-element" item=item %}
+			{% endfor %}
+		{% endif %}
+	</div>
+</section>

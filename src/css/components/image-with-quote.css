@@ -1,0 +1,43 @@
+.image-with-quote {
+	@apply relative overflow-hidden;
+	@apply flex items-center;
+	@apply px-8 py-16;
+
+	@screen md {
+		@apply px-16 pt-24;
+		min-height: 618px;
+	}
+}
+
+.image-with-quote__quote {
+	@apply relative z-50 m-auto;
+	@apply text-center;
+
+	@apply text-3xl text-white font-heading font-bold;
+	@apply leading-relaxed;
+
+	max-width: 1090px;
+
+	text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5), 2px 2px 2px rgba(0, 0, 0, 0.5);
+
+	@screen md {
+		@apply text-5xl;
+
+		text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5), 2px 2px 4px rgba(0, 0, 0, 0.75);
+	}
+}
+
+.image-with-quote__cite {
+	@apply block m-auto mt-8;
+
+	@apply font-default font-normal not-italic;
+	@apply text-2xl;
+}
+
+.image-with-quote__image {
+	@apply absolute top-0 left-0 w-full h-full;
+	@apply z-10;
+	@apply object-cover object-center;
+
+	@apply pointer-events-none;
+}

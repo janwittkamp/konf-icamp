@@ -1,0 +1,34 @@
+.privacy-modal {
+	@apply fixed left-1/2 z-50;
+	top: 12%;
+	transform: translateX(-50%);
+
+	width: 360px;
+
+	@apply p-6;
+	@apply bg-gray-light-blue;
+	@apply shadow;
+	@apply text-sm;
+}
+
+.privacy-modal h2 {
+	@apply text-secondary-dark text-xl;
+	@apply mb-4;
+}
+
+.privacy-modal-content {
+	@apply mb-6;
+}
+
+#privacy-cookie-icon {
+	@apply mr-2;
+}
+
+.privacy-modal-buttons {
+	@apply flex;
+	@apply items-center;
+}
+
+#cookie_consent_modal_accept {
+	@apply px-4 py-1 ml-auto;
+}

@@ -1,0 +1,35 @@
+[viewBag]
+title = "Inhalt mit Bild"
+canHaveChildren = 1
+==
+{variable type="switch" name="flipped" label="Element umdrehen" comment="Element umdrehen, sodass die Bilder links und der Inhalt rechts erscheinen."}false{/variable}
+{variable type="switch" name="image_inset" label="Bild mit Whitespace" comment="Freiraum um das Bild."}false{/variable}
+{variable type="mediafinder" name="image" label="Bild"}{/variable}
+{variable type="text" name="image_alt" label="Alternativ-Text"}{/variable}
+
+{% set vars = __SELF__.vars %}
+{% set imageUrl = null %}
+{% if vars.image %}
+	{% set imageUrl = vars.image|slice(0, 7) == "assets/" ? (vars.image | theme) : (vars.image | media) %}
+{% endif %}
+
+{%
+    partial 'templates/content-with-image'
+    title=vars.title
+	slogan=vars.slogan
+    content=vars.content
+	link=vars.link
+	link_title=vars.link_title
+	flipped=vars.flipped
+	button_left=vars.button_left
+	image={
+		image: imageUrl,
+		alt: vars.image_alt
+	}
+	image_inset=vars.image_inset
+	body
+%}
+	{children}
+		{component}
+	{/children}
+{% endpartial %}

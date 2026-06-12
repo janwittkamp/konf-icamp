@@ -1,0 +1,16 @@
+[blogCategories BlogCategories]
+displayEmpty = false
+categoryPage = "blog/category"
+==
+<div class="category-bar">
+	{% for category in BlogCategories.categories %}
+		<a class="category-bar-link {% if currentSlug == category.slug %}category-bar-link--active{% endif %}" href="{{ category.url }}">
+			{{ category.name }}
+		</a>
+		{% for child_category in category.children %}
+			<a class="category-bar-link {% if currentSlug == child_category.slug %}category-bar-link--active{% endif %}" href="{{ child_category.url }}">
+				{{ child_category.name }}
+			</a>
+		{% endfor %}
+	{% endfor %}
+</div>

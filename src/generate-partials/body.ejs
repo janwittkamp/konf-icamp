@@ -1,0 +1,6 @@
+<%= htmlWebpackPlugin
+    .tags
+    .headTags
+    .filter((tag) => tag.tagName !== 'meta' && tag.tagName !== 'link')
+%>
+<%= htmlWebpackPlugin.tags.bodyTags %>

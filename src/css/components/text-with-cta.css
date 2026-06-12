@@ -1,0 +1,47 @@
+.text-with-cta {
+	display: grid;
+	gap: clamp(1.5rem, 4vw, 4rem);
+
+	@screen md {
+		grid-template-columns: minmax(0, 1fr) minmax(280px, 0.42fr);
+	}
+}
+
+.text-with-cta_content {
+	@apply flex flex-col;
+	@apply flex-grow flex-shrink;
+}
+
+.text-with-cta_slogan {
+	display: block;
+	margin-bottom: 0.75rem;
+	color: var(--color-camp-red);
+	font-family: theme("fontFamily.heading");
+	font-size: 0.9rem;
+	font-weight: 900;
+	text-transform: uppercase;
+	letter-spacing: 0;
+}
+
+.text-with-cta_title {
+	margin-bottom: 1.25rem;
+	color: var(--color-camp-ink);
+}
+
+.text-with-cta_cta {
+	@apply flex flex-col;
+	width: 100%;
+}
+
+.text-with-cta_cta-text {
+	@apply mt-auto mb-0;
+	padding: clamp(1.25rem, 3vw, 2rem);
+	background: var(--color-camp-yellow);
+	border-radius: var(--radius-card);
+	color: var(--color-camp-ink);
+	box-shadow: 0 12px 0 rgba(196, 38, 47, 0.18);
+}
+
+.text-with-cta_link {
+	@apply m-0 mt-4 mr-auto;
+}

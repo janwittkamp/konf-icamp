@@ -1,0 +1,51 @@
+<form
+	id="contact-form"
+	class="contact-form"
+	data-request="HandleContactForm::onSubmit"
+	data-request-validate
+	data-request-update="'special/contact_form_sent': '#contact-form'"
+>
+	<fieldset class="contact-form-fields">
+		<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+			<div>
+				<label for="{{ __SELF__.id }}-name">Name</label>
+				<input id="{{ __SELF__.id }}-name" type="text" name="name" placeholder="Vor- und Nachname" required />
+				<div class="form-validate" data-validate-for="name"></div>
+			</div>
+			<div>
+				<label for="{{ __SELF__.id }}-mail">E-Mail Adresse</label>
+				<input id="{{ __SELF__.id }}-mail" type="email" name="email" placeholder="name@email.de" required />
+				<div class="form-validate" data-validate-for="email"></div>
+			</div>
+		</div>
+		<label for="{{ __SELF__.id }}-subject">Anliegen</label>
+		<input id="{{ __SELF__.id }}-subject" type="text" name="subject" placeholder="Frage zum Konfi-Camp" />
+		<div class="form-validate" data-validate-for="subject"></div>
+	</fieldset>
+	<fieldset class="contact-form-fields">
+		<label for="{{ __SELF__.id }}-message">Nachricht</label>
+		<textarea id="{{ __SELF__.id }}-message" name="message" placeholder="Worum geht es?" required rows="5"></textarea>
+		<div class="form-validate" data-validate-for="message"></div>
+	</fieldset>
+
+	<fieldset class="contact-form-fields contact-form-gdpr-wrap">
+		<label class="label-checkbox">
+			<input type="checkbox" name="gdpr" />
+			<span>
+				Ich habe die <a class="link" href="{{ 'datenschutz' | anyPage }}">Datenschutzerklärung</a> zur Kenntnis genommen.
+				Ich stimme zu, dass meine Angaben und Daten zur Beantwortung meiner Anfrage elektronisch erhoben und gespeichert werden.
+			</span>
+		</label>
+		<div class="form-validate" data-validate-for="gdpr"></div>
+
+		<label class="label-checkbox label-checkbox--check">
+			<input type="checkbox" name="check_message" />
+			<span>
+				Wenn Sie ein Mensch sind, wählen Sie diese Checkbox nicht an.
+			</span>
+		</label>
+	</fieldset>
+	<div class="contact-form-fields contact-form-button-wrap">
+		<button class="button contact-form-submit" type="submit">Senden</button>
+	</div>
+</form>

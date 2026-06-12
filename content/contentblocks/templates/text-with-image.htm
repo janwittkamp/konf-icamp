@@ -1,0 +1,38 @@
+[viewBag]
+title = "Text mit Bild"
+canHaveChildren = 0
+==
+{variable type="text" name="slogan" label="Slogan"}{/variable}
+{variable type="text" name="title" label="Titel"}{/variable}
+{variable type="richeditor" name="content" label="Inhalt"}{/variable}
+{variable type="ContentPagePickerAllowEmpty" name="link" label="Link"}{/variable}
+{variable type="text" name="link_title" label="Link Text"}{/variable}
+{variable type="switch" name="flipped" label="Element umdrehen" comment="Element umdrehen, sodass die Bilder links und der Inhalt rechts erscheinen."}false{/variable}
+{variable type="switch" name="button_left" label="Button links" comment="Button auf der linken Seite anstatt der rechten anzeigen."}false{/variable}
+
+{variable tab="Images" type="switch" name="image_inset" label="Bild mit Whitespace" comment="Freiraum um das Bild."}false{/variable}
+{variable tab="Images" type="mediafinder" name="image" label="Bild"}{/variable}
+{variable tab="Images" type="text" name="image_alt" label="Alternativ-Text"}{/variable}
+
+{% set vars = __SELF__.vars %}
+{% set imageUrl = null %}
+{% if vars.image %}
+	{% set imageUrl = vars.image|slice(0, 7) == "assets/" ? (vars.image | theme) : (vars.image | media) %}
+{% endif %}
+
+{%
+    partial 'templates/text-with-image'
+    title=vars.title
+	slogan=vars.slogan
+    content=vars.content
+	link=vars.link
+	link_title=vars.link_title
+	flipped=vars.flipped
+	button_left=vars.button_left
+	hasImage=vars.image
+	image={
+		image: imageUrl,
+		alt: vars.image_alt
+	}
+	image_inset=vars.image_inset
+%}

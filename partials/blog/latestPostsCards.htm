@@ -1,0 +1,14 @@
+[blogPosts]
+postsPerPage = {{limit}}
+disablePagination = true
+categoryFilter = {{category}}
+sortOrder = "published_at desc"
+masonry = false
+==
+{% partial "templates/aktuelles"
+	title=title
+	intro=intro
+	posts=blogPosts.posts
+	link_url=link_url
+	link_text=link_text
+%}

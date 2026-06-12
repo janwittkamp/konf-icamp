@@ -1,0 +1,50 @@
+title = "Contact"
+slug = "contact"
+
+[viewBag]
+layout = "default"
+fill[0][content] = "content.children.1"
+fill[0][setting] = "values.title"
+fill[0][var_key] = "page_title"
+fill[1][content] = "content.children.1"
+fill[1][setting] = "values.subtitle"
+fill[1][var_key] = "page_slogan"
+fill[2][content] = "content.children.1"
+fill[2][setting] = "values.image"
+fill[2][var_key] = "title_image"
+fill[3][content] = "content.children.1"
+fill[3][setting] = "values.image_alt"
+fill[3][var_key] = "title_image_alt"
+fill[4][content] = "content.children.2.children.0"
+fill[4][setting] = "values.slogan"
+fill[4][var_key] = "contact_slogan"
+fill[5][content] = "content.children.2.children.0"
+fill[5][setting] = "values.title"
+fill[5][var_key] = "contact_heading"
+
+[contents]
+content[templateSlug] = ""
+content[template] = ""
+content[children][1][template] = "title-image"
+content[children][1][title] = ""
+content[children][1][description] = ""
+content[children][1][sort] = 1
+content[children][2][template] = "section"
+content[children][2][title] = ""
+content[children][2][description] = ""
+content[children][2][sort] = 2
+content[children][2][values][color] = "gray-light-blue"
+content[children][2][values][overlay_bottom] = "left"
+content[children][2][children][0][template] = "contact"
+content[children][2][children][0][title] = ""
+content[children][2][children][0][description] = ""
+content[children][2][children][0][sort] = 1
+==
+{variable name="title_image" type="mediafinder" label="Titelbild" comment="Großes Bild im Seitenkopf"}{/variable}
+{variable name="title_image_alt" type="text" label="Zitat Titelbild Alternativtext" comment="Beschreibung des Bildes für Screenreader"}{/variable}
+
+{variable name="page_title" type="text" label="Seitentitel" comment="Wird auf dem Titelbild angezeigt"}{/variable}
+{variable name="page_slogan" type="text" label="Seitenslogan" comment="Wird unter dem Seitentitel angezeigt"}{/variable}
+
+{variable name="contact_slogan" type="text" label="Formular Slogan" comment="Wird über der Formularüberschrift angezeigt"}{/variable}
+{variable name="contact_heading" type="text" label="Formularüberschrift"}{/variable}

@@ -1,0 +1,62 @@
+.stripe-loading-indicator {
+	@apply fixed bottom-0 left-0;
+	@apply h-4 w-full;
+
+	@apply bg-secondary-dark;
+	@apply pointer-events-none;
+
+	.stripe {
+		@apply absolute top-0 left-0;
+		@apply w-full h-full;
+		@apply bg-secondary-dark;
+		animation: infinite-loader 60s linear;
+	}
+
+	.stripe-loaded {
+		@apply hidden;
+	}
+
+	&.loaded {
+		@apply hidden;
+
+		.stripe {
+			animation-play-state: paused;
+		}
+	}
+}
+
+@keyframes infinite-loader {
+	0% {
+		transform: translateX(-100%)
+	}
+	10% {
+		transform: translateX(-50%)
+	}
+	20% {
+		transform: translateX(-25%)
+	}
+	30% {
+		transform: translateX(-12.5%)
+	}
+	40% {
+		transform: translateX(-6.25%)
+	}
+	50% {
+		transform: translateX(-3.125%)
+	}
+	60% {
+		transform: translateX(-1.5625%)
+	}
+	70% {
+		transform: translateX(-0.78125%)
+	}
+	80% {
+		transform: translateX(-0.390625%)
+	}
+	90% {
+		transform: translateX(-0.1953125%)
+	}
+	100% {
+		transform: translateX(-0.09765625%)
+	}
+}

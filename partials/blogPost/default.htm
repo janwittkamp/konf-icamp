@@ -1,0 +1,61 @@
+{% set post = __SELF__.post %}
+{% set category = post.categories|filter(c => c.slug != 'alle')|first|default(post.categories[0]) %}
+{% set image = post.featured_images[0] %}
+
+<div class="blog-post">
+	<header class="blog-post-hero {% if not image %}blog-post-hero--no-image{% endif %}">
+		{% if image %}
+			<div class="blog-post-hero-media">
+				{%
+					partial "common/resized-image"
+					image=image
+					image_alt=post.title
+					class_name="blog-post-hero-image"
+					sizes=[{w: 760, h: 520}, {w: 1240, h: 620, screenW: 1024}]
+				%}
+			</div>
+		{% endif %}
+
+		<div class="blog-post-hero-content">
+			<a class="blog-post-back" href="/aktuelles">Aktuelles</a>
+			<div class="blog-post-meta">
+				<span>Veröffentlicht am {{ post.published_at|date('d. F Y') }}</span>
+				{% if category %}
+					<span class="blog-post-meta-divider" aria-hidden="true"></span>
+					<a class="blog-post-category" href="{{ category.url }}">{{ category.name }}</a>
+				{% endif %}
+			</div>
+			<h1 class="blog-post-title">{{ post.title }}</h1>
+			{% if post.excerpt %}
+				<p class="blog-post-excerpt">{{ post.excerpt }}</p>
+			{% endif %}
+		</div>
+	</header>
+
+	<div class="blog-post-body">
+		<div class="blog-post-content fr-view">
+			{% if post.metadata.hasTable and post.metadata.raw %}
+				{{ post.metadata.raw | raw }}
+			{% else %}
+				{{ post.content_html | raw }}
+			{% endif %}
+		</div>
+	</div>
+
+	{% set previousPost = post.previousPost() %}
+	{% set nextPost = post.nextPost() %}
+
+	<div class="blog-post-navigation">
+		{% if previousPost %}
+			<a class="button button-sm blog-post-button blog-post-button--prev" href="{{ "" | page({ slug: previousPost.slug }) }}">
+				neuerer Artikel
+			</a>
+		{% endif %}
+
+		{% if nextPost %}
+			<a class="button button-sm blog-post-button blog-post-button--next" href="{{ "" | page({ slug: nextPost.slug }) }}">
+				älterer Artikel
+			</a>
+		{% endif %}
+	</div>
+</div>

@@ -1,0 +1,64 @@
+<section class="camp-slider" data-camp-slider>
+	{% if title or intro %}
+		<div class="camp-slider-header">
+			{% if title %}
+				<h2>{{ title }}</h2>
+			{% endif %}
+			{% if intro %}
+				<p>{{ intro }}</p>
+			{% endif %}
+		</div>
+	{% endif %}
+
+	<div class="camp-slider-shell">
+		<div class="camp-slider-viewport">
+			{% for slide in slides %}
+				{% set image = null %}
+				{% if slide.image %}
+					{% set image = slide.image|slice(0, 7) == "assets/" ? (slide.image | theme) : (slide.image | media) %}
+				{% endif %}
+				<article class="camp-slider-slide {% if loop.first %}camp-slider-slide--active{% endif %}" data-camp-slider-slide>
+					{% if image %}
+						{%
+							partial "common/resized-image"
+							image=image
+							image_alt=slide.image_alt
+							class_name="camp-slider-image"
+							sizes=[{w: 768, h: 432}, {w: 1180, h: 664, screenW: 1024}]
+						%}
+					{% endif %}
+					<div class="camp-slider-caption">
+						{% if slide.label %}
+							<span>{{ slide.label }}</span>
+						{% endif %}
+						{% set slideTitle = slide.slide_title | default(slide.title) %}
+						{% if slideTitle %}
+							<h3>{{ slideTitle }}</h3>
+						{% endif %}
+						{% if slide.text %}
+							<p>{{ slide.text }}</p>
+						{% endif %}
+					</div>
+				</article>
+			{% endfor %}
+		</div>
+
+		{% if slides|length > 1 %}
+			<div class="camp-slider-controls" aria-label="Slider steuern">
+				<button type="button" class="camp-slider-button" data-camp-slider-prev>
+					<span class="sr-only">Vorheriger Slide</span>
+				</button>
+				<div class="camp-slider-dots">
+					{% for slide in slides %}
+						<button type="button" class="camp-slider-dot {% if loop.first %}camp-slider-dot--active{% endif %}" data-camp-slider-dot="{{ loop.index0 }}">
+							<span class="sr-only">Slide {{ loop.index }} anzeigen</span>
+						</button>
+					{% endfor %}
+				</div>
+				<button type="button" class="camp-slider-button camp-slider-button--next" data-camp-slider-next>
+					<span class="sr-only">Naechster Slide</span>
+				</button>
+			</div>
+		{% endif %}
+	</div>
+</section>

@@ -1,0 +1,20 @@
+[viewBag]
+title = "Geschichte in Bildern"
+canHaveChildren = 0
+==
+{variable type="text" name="title" label="Titel"}Geschichte in Bildern{/variable}
+{variable type="textarea" name="intro" label="Einleitung"}{/variable}
+{repeater name="items" prompt="Station hinzufügen"}
+	{variable type="text" name="year" label="Jahr"}{/variable}
+	{variable type="text" name="label" label="Ort / Label"}{/variable}
+	{variable type="text" name="item_title" label="Titel"}{/variable}
+	{variable type="textarea" name="text" label="Text"}{/variable}
+	{variable type="mediafinder" name="image" label="Bild"}{/variable}
+	{variable type="text" name="image_alt" label="Alternativtext"}{/variable}
+{/repeater}
+
+{% partial "templates/history-timeline"
+	title=__SELF__.vars.title
+	intro=__SELF__.vars.intro
+	items=__SELF__.vars.items
+%}

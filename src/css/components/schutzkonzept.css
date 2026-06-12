@@ -1,0 +1,99 @@
+.schutzkonzept-block {
+	position: relative;
+	display: grid;
+	gap: clamp(1.5rem, 4vw, 3rem);
+	padding: clamp(1.5rem, 4vw, 3rem);
+	overflow: hidden;
+	background: #fff;
+	border: 1px solid var(--color-camp-line);
+	border-radius: var(--radius-card);
+	box-shadow: var(--shadow-soft);
+
+	@screen lg {
+		grid-template-columns: auto minmax(0, 1fr) minmax(260px, 0.32fr);
+		align-items: center;
+	}
+}
+
+.schutzkonzept-block:before {
+	position: absolute;
+	right: -56px;
+	top: -56px;
+	width: 160px;
+	height: 160px;
+	background: rgba(var(--color-camp-yellow-rgb), 0.32);
+	border-radius: 999px;
+	content: "";
+}
+
+.schutzkonzept-block__mark {
+	position: relative;
+	display: grid;
+	width: clamp(4.75rem, 7vw, 6.25rem);
+	height: clamp(4.75rem, 7vw, 6.25rem);
+	place-items: center;
+	background: var(--color-camp-red);
+	border-radius: 999px;
+	box-shadow: -0.6rem 0.6rem 0 rgba(var(--color-camp-yellow-rgb), 0.42);
+}
+
+.schutzkonzept-block__icon {
+	position: relative;
+	z-index: 1;
+	width: 58%;
+	height: 58%;
+	color: #fff;
+	overflow: visible;
+}
+
+.schutzkonzept-block__shield,
+.schutzkonzept-block__check {
+	fill: none;
+	stroke: currentColor;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	stroke-width: 5.5;
+}
+
+.schutzkonzept-block__check {
+	stroke: var(--color-camp-yellow);
+	stroke-width: 6.5;
+}
+
+.schutzkonzept-block__kicker {
+	display: block;
+	margin-bottom: 0.7rem;
+	color: var(--color-camp-red);
+	font-family: theme("fontFamily.heading");
+	font-size: 0.9rem;
+	font-weight: 900;
+	text-transform: uppercase;
+	letter-spacing: 0;
+}
+
+.schutzkonzept-block__title {
+	margin: 0 0 1rem;
+	color: var(--color-camp-ink);
+}
+
+.schutzkonzept-block__text {
+	color: var(--color-camp-muted);
+}
+
+.schutzkonzept-block__stand {
+	margin: 1rem 0 0;
+	color: var(--color-camp-ink);
+	font-family: theme("fontFamily.heading");
+	font-weight: 800;
+}
+
+.schutzkonzept-block__actions {
+	position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.8rem;
+
+	@screen lg {
+		justify-content: flex-end;
+	}
+}

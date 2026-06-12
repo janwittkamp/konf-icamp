@@ -1,0 +1,55 @@
+<section class="history-timeline">
+	{% if title or intro %}
+		<div class="history-timeline-header">
+			{% if title %}
+				<h2>{{ title }}</h2>
+			{% endif %}
+			{% if intro %}
+				<p>{{ intro }}</p>
+			{% endif %}
+		</div>
+	{% endif %}
+
+	<div class="history-timeline-list">
+		{% for item in items %}
+			{% set image = null %}
+			{% if item.image %}
+				{% set image = item.image|slice(0, 7) == "assets/" ? (item.image | theme) : (item.image | media) %}
+			{% endif %}
+
+			{% set itemTitle = item.item_title|replace({"Konfi-Camp": "<span class=\"history-timeline-nowrap\">Konfi-Camp</span>"}) %}
+			{% set itemText = item.text|replace({"Konfi-Camp": "<span class=\"history-timeline-nowrap\">Konfi-Camp</span>"}) %}
+
+			<article class="history-timeline-item">
+				{% if image %}
+					<div class="history-timeline-image">
+						{%
+							partial "common/resized-image"
+							image=image
+							image_alt=item.image_alt
+							class_name="history-timeline-photo"
+							sizes=[{w: 640, h: 426}, {w: 900, h: 600, screenW: 768}]
+						%}
+					</div>
+				{% endif %}
+
+				<div class="history-timeline-content">
+					<div class="history-timeline-meta">
+						{% if item.year %}
+							<span class="history-timeline-year">{{ item.year }}</span>
+						{% endif %}
+						{% if item.label %}
+							<span class="history-timeline-label">{{ item.label }}</span>
+						{% endif %}
+					</div>
+					{% if item.item_title %}
+						<h3>{{ itemTitle | raw }}</h3>
+					{% endif %}
+					{% if item.text %}
+						<p>{{ itemText | raw }}</p>
+					{% endif %}
+				</div>
+			</article>
+		{% endfor %}
+	</div>
+</section>

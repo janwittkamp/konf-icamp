@@ -1,0 +1,20 @@
+[viewBag]
+title = "Spalten"
+canHaveChildren = 1
+==
+{variable name="cols" label="Anzahl Spalten" type="dropdown" options="1: Eine Spalte|2: Zwei Spalten|3: Drei Spalten"}2{/variable}
+{variable name="background" label="Spalten mit Hintergrund" type="switch"}{/variable}
+
+{% if __SELF__.vars.background %}
+	{% set parent_class = "cols--color" %}
+{% endif %}
+
+{# list classes so tailwind keeps them #}
+
+<div class="cols cols-{cols} {{ parent_class }}">
+	{children}
+		<div class="cols-col">
+			{component}
+		</div>
+	{/children}
+</div>

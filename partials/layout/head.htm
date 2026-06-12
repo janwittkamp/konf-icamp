@@ -1,0 +1,44 @@
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	{% if this.page.meta_title %}
+		<meta name="title" content="{{ this.page.meta_title }}">
+	{% endif %}
+	{% if this.page.meta_description %}
+		<meta name="description" content="{{ this.page.meta_description }}">
+	{% endif %}
+	{% if this.page.meta_keywords %}
+		<meta name="keywords" content="{{ this.page.meta_keywords }}">
+	{% endif %}
+	<title>{{ this.page.meta_title | default(this.page.title) }}</title>
+
+	<meta property="og:title" content="{{ this.page.meta_title | default(this.page.title) }}" />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="{{ this.request.fullUrl() }}" />
+	<meta property="og:image" content="{{ this.theme.schema_image | media }}" />
+	<meta property="og:description" content="{{ this.page.meta_description }}" />
+	<meta property="og:locale" content="de_DE" />
+	<meta property="og:site_name" content="{{ this.theme.schema_name }}" />
+
+	<link rel="icon" type="image/png" href="{{ 'assets/favicon/favicon-96x96.png' | theme }}" sizes="96x96"/>
+	<link rel="icon" type="image/svg+xml" href="{{ 'assets/favicon/favicon.svg' | theme }}"/>
+	<link rel="shortcut icon" href="{{ 'assets/favicon/favicon.ico' | theme }}"/>
+	<link rel="apple-touch-icon" sizes="180x180" href="{{ 'assets/favicon/apple-touch-icon.png' | theme }}"/>
+	<meta name="apple-mobile-web-app-title" content="{{ this.page.meta_title | default(this.page.title) }}"/>
+	<link rel="manifest" href="{{ 'assets/favicon/site.webmanifest' | theme }}"/>
+
+	{% partial "meta/styles" %}
+	{% placeholder head %}
+
+	{% placeholder critical_css %}
+</head>
+{% set pageId = this.page.id %}
+{% set pageTitle = this.page.title %}
+{% if pageId is empty %}
+	{% set pageId = page.id %}
+{% endif %}
+{% if pageTitle is empty %}
+	{% set pageTitle = page.title %}
+{% endif %}

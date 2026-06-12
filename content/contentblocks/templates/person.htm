@@ -1,0 +1,21 @@
+[viewBag]
+title = "Person"
+canHaveChildren = 0
+==
+{variable type="text" name="name" label="Name"}{/variable}
+{variable type="email" name="email" label="E-Mail Adresse"}{/variable}
+{variable type="mediafinder" name="image" label="Bild"}{/variable}
+{variable type="richeditor" name="description" label="Beschreibung" toolbarButtons="formatUL|formatOL||undo|redo|clearFormatting|html"}{/variable}
+{repeater name="jobs" prompt="Bezeichnung hinzufügen" tab="Jobs"}
+	{variable type="text" name="title" label="Bezeichnung"}{/variable}
+{/repeater}
+
+{% set vars = __SELF__.vars %}
+{%
+	partial "templates/person"
+	name=vars.name
+	email=vars.email
+	image=vars.image | media
+	description=vars.description
+	jobs=vars.jobs
+%}

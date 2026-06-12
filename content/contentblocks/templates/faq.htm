@@ -1,0 +1,14 @@
+[viewBag]
+title = "FAQ"
+canHaveChildren = 0
+==
+{variable type="text" name="title" label="Titel"}FAQ{/variable}
+{repeater name="items" prompt="Frage hinzufügen"}
+	{variable type="text" name="question" label="Frage"}{/variable}
+	{variable type="richeditor" name="answer" label="Antwort"}{/variable}
+{/repeater}
+
+{% partial "templates/faq"
+	title=__SELF__.vars.title
+	items=__SELF__.vars.items
+%}

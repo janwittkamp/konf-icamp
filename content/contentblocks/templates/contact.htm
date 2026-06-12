@@ -1,0 +1,60 @@
+[viewBag]
+title = "Kontaktformular"
+canHaveChildren = 0
+==
+{variable type="text" name="slogan" label="Slogan"}{/variable}
+{variable type="text" name="title" label="Titel"}{/variable}
+
+{% set vars = __SELF__.vars %}
+{% set contactSlogan = vars.slogan ? vars.slogan : "Kontakt zum Team" %}
+{% set contactTitle = vars.title ? vars.title : "Wobei können wir helfen?" %}
+
+<div class="contact-panel">
+	<div class="contact-panel__intro">
+		<span class="contact-panel__kicker">{{ contactSlogan }}</span>
+
+		<h2 class="contact-panel__title">{{ contactTitle }}</h2>
+
+		<p class="contact-panel__text">
+			Schreib uns, wenn es um Organisation, Anmeldung, Unterstützung, Schutzkonzept oder allgemeine Fragen zum Konfi-Camp geht.
+			Das Team ordnet deine Anfrage und meldet sich zurück.
+		</p>
+
+		<div class="contact-panel__cards" aria-label="Kontaktbereiche">
+			<article class="contact-panel__card">
+				<span>01</span>
+				<h3>Camp & Organisation</h3>
+				<p>Fragen zu Ablauf, Vorbereitung, Gemeinden, Teilnahme oder allgemeinen Informationen.</p>
+			</article>
+			<article class="contact-panel__card">
+				<span>02</span>
+				<h3>Unterstützung</h3>
+				<p>Anfragen zu Sponsoring, Sachspenden oder zur Sponsorenmappe.</p>
+			</article>
+			<article class="contact-panel__card">
+				<span>03</span>
+				<h3>Vertrauliche Anliegen</h3>
+				<p>Hinweise oder Fragen zum Schutzkonzept und zu Ansprechwegen im Camp.</p>
+			</article>
+		</div>
+
+		<div class="contact-panel__faq" aria-label="Häufige Kontaktfragen">
+			<details>
+				<summary>Wofür ist das Kontaktformular gedacht?</summary>
+				<p>Für allgemeine Fragen zum Konfi-Camp, zur Organisation, zu Unterstützungsangeboten oder wenn unklar ist, welche Stelle zuständig ist.</p>
+			</details>
+			<details>
+				<summary>Wie läuft der Kontakt zur Anmeldung?</summary>
+				<p>Die konkrete Teilnahme wird über die jeweilige Gemeinde geklärt. Über das Formular können Fragen gesammelt und an die passende Stelle weitergegeben werden.</p>
+			</details>
+			<details>
+				<summary>Was ist bei sensiblen Anliegen wichtig?</summary>
+				<p>Schreib nur das, was du mitteilen möchtest. Hinweise zum Schutzkonzept findest du zusätzlich auf der Seite <a href="/schutzkonzept">Schutzkonzept</a>.</p>
+			</details>
+		</div>
+	</div>
+
+	<div class="contact-panel__form">
+		{% partial 'special/contact_form' %}
+	</div>
+</div>

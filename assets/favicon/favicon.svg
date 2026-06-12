@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+	<title id="title">Konfi-Camp</title>
+	<style>
+		@font-face {
+			font-family: "KonfiJester";
+			src:
+				url("../fonts/jester-webfont.woff2") format("woff2"),
+				url("../fonts/jester-webfont.woff") format("woff");
+			font-weight: 400;
+			font-style: normal;
+			font-display: swap;
+		}
+
+		.logo-type {
+			fill: #c4262f;
+			font-family: "KonfiJester", Georgia, "Times New Roman", serif;
+			font-size: 250px;
+			font-weight: 400;
+			letter-spacing: 0;
+		}
+	</style>
+	<rect x="36" y="36" width="440" height="440" rx="112" fill="#fff8ec"/>
+	<path d="M88 365c82 28 235 25 336-13" fill="none" stroke="#ffd43d" stroke-width="40" stroke-linecap="butt"/>
+	<text class="logo-type" x="256" y="315" text-anchor="middle" dominant-baseline="middle">KC</text>
+</svg>

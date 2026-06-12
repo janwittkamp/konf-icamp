@@ -1,0 +1,24 @@
+[viewBag]
+title = "Text mit Call-To-Action"
+canHaveChildren = 0
+==
+{variable type="text" name="slogan" label="Slogan"}{/variable}
+{variable type="text" name="title" label="Titel"}{/variable}
+{variable type="richeditor" name="content" label="Inhalt"}{/variable}
+
+{variable type="richeditor" name="cta_content" label="Inhalt" tab="Call To Action"}{/variable}
+{variable type="ContentPagePickerAllowEmpty" name="link" label="Link" tab="Call To Action"}{/variable}
+{variable type="text" name="link_title" label="Link Text" tab="Call To Action"}{/variable}
+
+{% set vars = __SELF__.vars %}
+
+{%
+    partial 'templates/text-with-cta'
+    title=vars.title
+	slogan=vars.slogan
+    content=vars.content
+
+	cta_content=vars.cta_content
+	link=vars.link
+	link_title=vars.link_title
+%}

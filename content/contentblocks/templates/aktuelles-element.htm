@@ -1,0 +1,24 @@
+[viewBag]
+title = "Aktuelles Element"
+canHaveChildren = 0
+==
+{variable type="text" name="date" label="Datum"}{/variable}
+{variable type="text" name="title" label="Titel"}{/variable}
+{variable type="textarea" name="text" label="Text"}{/variable}
+{variable type="mediafinder" name="image" label="Bild"}{/variable}
+{variable type="text" name="image_alt" label="Alternativtext"}{/variable}
+{variable type="text" name="link_url" label="Link URL"}{/variable}
+{variable type="text" name="link_text" label="Link Text"}Mehr lesen{/variable}
+
+{% set vars = __SELF__.vars %}
+{% partial "templates/aktuelles-element"
+	item={
+		date: vars.date,
+		title: vars.title,
+		text: vars.text,
+		image: vars.image,
+		image_alt: vars.image_alt,
+		link_url: vars.link_url,
+		link_text: vars.link_text
+	}
+%}

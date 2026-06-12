@@ -1,0 +1,79 @@
+.button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 2.85rem;
+	padding: 0.75rem 1.1rem;
+	margin-left: 0;
+	background: #fff;
+	border: 2px solid var(--color-camp-red);
+	border-radius: 999px;
+	color: var(--color-camp-red);
+	font-family: theme("fontFamily.heading");
+	font-weight: 800;
+	letter-spacing: 0;
+	line-height: 1;
+	text-decoration: none;
+	transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
+
+	&:hover {
+		background: var(--color-camp-red);
+		border-color: var(--color-camp-red);
+		color: #fff;
+		text-decoration: none;
+		transform: translateY(-1px);
+ 	}
+
+	&:focus {
+		@apply outline-none;
+		box-shadow: 0 0 0 4px rgba(255, 212, 61, 0.55);
+	}
+}
+
+.button-primary {
+	background: var(--color-camp-red);
+	border-color: var(--color-camp-red);
+	color: #fff;
+	box-shadow: 0 10px 24px rgba(var(--color-camp-red-rgb), 0.22);
+
+	&:hover {
+		background: var(--color-camp-red-dark);
+		border-color: var(--color-camp-red-dark);
+	}
+}
+
+.fr-view .button-primary,
+.audience-copy .button-primary {
+	color: #fff;
+
+	&:hover {
+		color: #fff;
+	}
+}
+
+.button-secondary {
+	background: var(--color-camp-yellow);
+	border-color: var(--color-camp-yellow);
+	color: var(--color-camp-ink);
+
+	&:hover {
+		background: var(--color-camp-ink);
+		border-color: var(--color-camp-ink);
+		color: #fff;
+	}
+}
+
+.fr-view .button-secondary,
+.audience-copy .button-secondary {
+	color: var(--color-camp-ink);
+
+	&:hover {
+		color: #fff;
+	}
+}
+
+.button-sm {
+	@apply px-6 py-2 text-base;
+
+	text-transform: none;
+}

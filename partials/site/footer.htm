@@ -1,0 +1,94 @@
+[staticMenu footerMenuMain]
+code = "footer-menu-main"
+[staticMenu footerMenuLegal]
+code = "footer-menu-legal"
+==
+
+<footer class="footer">
+	<div class="footer-inner">
+		{% for slice in footerMenuMain.menuItems %}
+			<ol class="footer-menu">
+				{% for item in slice.items %}
+					<li class="footer-link-wrap">
+						{% if item.type == "header" %}
+							<span class="footer-title">{{ item.title }}</span>
+						{% else %}
+							<a href="{{ item.url }}" class="footer-link {% if item.isActive or item.isChildActive %} footer-link--active {% endif %}">
+								{{ item.title }}
+							</a>
+						{% endif %}
+
+						{% if item.items %}
+							<ol class="footer-link-children">
+								{% for child in item.items %}
+									<li class="footer-link-wrap">
+										<a href="{{ child.url }}" class="footer-link {% if child.isActive or child.isChildActive %} footer-link--active {% endif %}">
+											{{ child.title }}
+										</a>
+									</li>
+								{% endfor %}
+							</ol>
+						{% endif %}
+					</li>
+				{% endfor %}
+			</ol>
+		{% endfor %}
+			<div class="footer-contact">
+				<span class="footer-title">Kontakt</span>
+				<div class="footer-contact-content">
+					<p class="footer-contact-name">Konfi-Camp-Team</p>
+					<p>Jugendreferat im Evangelischen Kirchenkreis Gütersloh</p>
+					<p>
+						Moltkestraße 10<br>
+						33330 Gütersloh
+					</p>
+					<p>
+						<a href="tel:+49524123485121">Tel.: (05241) 23485 - 121</a><br>
+						<a href="/kontakt">Kontaktformular öffnen</a>
+					</p>
+					<a
+						class="footer-contact-more"
+						href="https://www.kirchegt.de/bildung/jugendreferat"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						Weitere Infos beim Jugendreferat
+					</a>
+				</div>
+			</div>
+	</div>
+	<div class="footer-partners" aria-label="Partner und Social Media">
+		<a
+			class="footer-partner"
+			href="https://www.kirchegt.de/"
+			target="_blank"
+			rel="noopener"
+		>
+			<img
+				src="/themes/konficamp/assets/images/logos/logo-kirchegt.png"
+				alt="Evangelischer Kirchenkreis Gütersloh"
+				class="footer-partner-image footer-partner-image--kirchenkreis"
+				loading="lazy"
+			>
+		</a>
+		<a
+			class="footer-partner"
+			href="https://www.instagram.com/kc_guetersloh/"
+			target="_blank"
+			rel="noopener"
+		>
+			<img
+				src="/themes/konficamp/assets/images/logos/jesus-inside.gif"
+				alt="Konfi-Camp auf Instagram"
+				class="footer-partner-image footer-partner-image--instagram"
+				loading="lazy"
+			>
+			<span class="footer-partner-label">Instagram</span>
+		</a>
+	</div>
+</footer>
+<div class="subfooter">
+	&copy; {{ "now" | date("Y") }} Alle Rechte vorbehalten
+	<span class="subfooter-divider"></span>
+	Konfi-Camp
+</div>

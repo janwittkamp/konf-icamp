@@ -1,0 +1,139 @@
+.person {
+	display: grid;
+	margin: 2rem 0;
+	overflow: hidden;
+	background: #fff;
+	border: 1px solid var(--color-camp-line);
+	border-radius: var(--radius-card);
+	box-shadow: 0 14px 44px rgba(36, 27, 24, 0.08);
+
+	@screen md {
+		grid-template-columns: minmax(220px, 0.36fr) minmax(0, 1fr);
+	}
+}
+
+.person-meta {
+	@apply relative;
+	@apply flex-shrink-0;
+
+	margin: 0;
+	@screen md {
+		@apply m-0 h-full;
+	}
+
+	> picture, img {
+		max-height: 300px;
+	}
+
+	@screen md {
+		max-height: 450px;
+
+		> picture, img {
+			max-height: none;
+		}
+	}
+}
+
+.person-image {
+	@apply h-full mt-0 mb-0;
+	@apply object-contain object-left-top;
+
+	@screen md {
+		@apply w-full;
+		@apply object-cover object-center;
+	}
+}
+
+.person-jobs {
+	@apply px-8 pt-6 bg-white;
+	@apply font-heading text-lg leading-normal;
+
+	> li {
+		@apply inline-block;
+
+		&:not(:last-child):after {
+			content: ",";
+		}
+	}
+
+	@screen md {
+		@apply absolute bottom-0 left-0 right-0;
+		@apply p-4 mt-auto m-0;
+		background: rgba(196, 38, 47, 0.9);
+		@apply text-center text-white;
+
+		> li {
+			@apply block;
+			&:after {
+				content: none !important;
+			}
+		}
+	}
+}
+
+.person-info {
+	@apply flex flex-col;
+
+	@apply p-8 pt-4 md:pt-8;
+	@apply text-xl leading-relaxed;
+	@apply bg-white;
+}
+
+.person-name {
+	@apply mb-4;
+	color: var(--color-camp-ink);
+	@apply text-2xl;
+}
+
+.person-description {
+	@apply mb-4;
+}
+
+.person-email-wrap {
+	@apply flex items-center;
+	@apply relative;
+	@apply mt-auto ml-auto mb-0 mr-0;
+
+	@apply transition-colors;
+	@apply border border-transparent;
+
+	&:hover {
+		border-color: var(--color-camp-red);
+	}
+
+	&:before {
+		content: "";
+
+		@apply h-4 w-6 mx-2;
+		background: var(--color-camp-red);
+
+		mask-repeat: no-repeat;
+		mask-size: contain;
+		mask-position: center;
+		mask-image: url("../../images/icons/mail-brown.svg");
+	}
+}
+
+.person-email {
+	@apply inline-block py-1 px-2;
+		border-bottom: 1px solid var(--color-camp-red);
+	@apply transition-colors;
+
+	color: var(--color-camp-red);
+
+	&:hover {
+		@apply text-white;
+		background: var(--color-camp-red);
+	}
+
+	&:before {
+		@apply absolute;
+
+		top: -1px;
+		bottom: -1px;
+		left: -1px;
+		right: -1px;
+
+		content: "";
+	}
+}

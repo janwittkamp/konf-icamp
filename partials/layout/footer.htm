@@ -1,0 +1,54 @@
+{% partial "site/footer" %}
+
+{#
+	remove src and srcset and replace with data-src and data-srcset
+	this allows for compatiblity with non-js browsers
+	we cannot do this in webpack as those scripts are deferred.
+	images would be finished when that is run.
+
+	use of var is on purpose for best compatibility
+#}
+<script>
+	(function () {
+		if (!"IntersectionObserver" in window) {
+			return;
+		}
+
+		var images = document.querySelectorAll("img[src], img[srcset], source[srcset]")
+
+		for (var i = 0; i < images.length; i++) {
+			var image = images[i]
+
+			if (image.complete || image.getAttribute("data-disable-lazy")) {
+				continue;
+			}
+
+			var src = image.getAttribute("src")
+
+			if (src && src !== "") {
+				// don't defer svg
+				if (src.match("\.svg")) {
+					continue;
+				}
+
+				image.setAttribute("data-src", src)
+				image.removeAttribute("src")
+			}
+
+			var srcset = image.getAttribute("srcset")
+			if (srcset && srcset !== "") {
+				image.setAttribute("data-srcset", srcset)
+				image.removeAttribute("srcset")
+			}
+		}
+	})()
+</script>
+
+<!-- Scripts -->
+<script data-deferLoad data-src="{{ [
+	'@framework',
+	'@framework.extras',
+] | theme }}"></script>
+{% scripts %}
+
+{% partial "_generated/body" %}

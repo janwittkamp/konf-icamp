@@ -1,0 +1,111 @@
+input, textarea {
+	@apply transition-all;
+
+	&:focus {
+		@apply outline-none;
+		@apply ring ring-1 ring-secondary-dark ring-opacity-50;
+	}
+}
+
+label {
+	@apply text-primary-dark;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"],
+input[type="search"],
+input[type="email"],
+textarea {
+	@apply block w-full;
+	@apply px-4 py-2 mb-4;
+	@apply bg-white;
+	@apply text-xl leading-relaxed;
+	@apply appearance-none;
+	@apply rounded-none;
+
+	@apply border border-secondary-dark;
+	border-top-color: transparent;
+	border-left-color: transparent;
+	border-right-color: transparent;
+
+	@apply outline-none;
+	@apply resize-none;
+
+	&:focus {
+		@apply border-secondary-dark !important;
+	}
+}
+
+input[type="checkbox"] {
+	@apply flex items-center justify-center;
+	@apply flex-shrink-0 mt-1 mr-4;
+	@apply appearance-none;
+	@apply w-6 h-6;
+
+	@apply bg-white;
+	@apply border border-secondary-dark;
+
+	@apply transition-all;
+
+	&:checked {
+		@apply bg-secondary-dark;
+
+		&:before {
+			content: "\2713";
+
+			@apply text-lg text-center text-white;
+		}
+	}
+}
+
+label {
+	@apply text-sm;
+}
+
+.no-margin {
+	@apply mb-0 !important;
+}
+
+.label-checkbox {
+	@apply flex -mt-1;
+	@apply text-xl leading-snug;
+}
+
+.label-checkbox--check {
+	@apply hidden;
+}
+
+.input-with-button {
+	@apply flex;
+
+	input {
+		@apply flex-shrink;
+
+		&:focus {
+			@apply ring-0;
+		}
+	}
+
+	button {
+		@apply mb-4 px-4;
+		@apply bg-secondary-dark;
+		@apply flex-shrink-0;
+
+		margin-left: -1px;
+		margin-right: 0;
+	}
+}
+
+.form-validate {
+	@apply text-sm text-secondary-dark;
+	@apply -mt-3 mb-4;
+
+	&:empty {
+		@apply hidden;
+	}
+}
+
+.label-checkbox + .form-validate {
+	@apply mt-0;
+}

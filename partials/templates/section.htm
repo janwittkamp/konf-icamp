@@ -1,0 +1,9 @@
+{% if not color %}
+	{% set color = "white" %}
+{% endif %}
+
+{% set className = ["section", "section-" ~ color, column_classes] %}
+
+<section class="{{ className | filter(v => v) | join(" ") }}">
+	{{ body | raw }}
+</section>

@@ -1,0 +1,29 @@
+url = "/suche"
+title = "Suche"
+layout = "default"
+
+[InterweberSearchResults]
+queryParam = "q"
+==
+{% partial "templates/section" color="gray-light-blue" body %}
+	<div class="fr-view">
+		<h1>Suchergebnisse</h1>
+	</div>
+
+	<div class="search-input-wrap">
+		{% partial "common/search" label=true %}
+	</div>
+
+	{% set results = InterweberSearchResults.getResults() %}
+	{% for result in results %}
+		<div class="search-result">
+			<a class="search-result-title" href="{{ result.getUrl() }}">{{ result.getTitle() }}</a>
+			<div class="search-result-preview">{{ result.getPreview() | raw }}</div>
+			<a class="search-result-show button" href="{{ result.getUrl() }}">&hellip; mehr lesen</a>
+		</div>
+	{% else %}
+		<div class="fr-view">
+			<p>Für Ihre Suche gibt es leider keine Treffer.</p>
+		</div>
+	{% endfor %}
+{% endpartial %}

@@ -1,0 +1,41 @@
+.cols {
+	@apply grid grid-cols-1;
+	gap: clamp(1rem, 2vw, 1.75rem);
+
+	@screen sm {
+		@apply gap-4;
+	}
+
+	@screen md {
+		@apply gap-8;
+	}
+}
+
+.cols-2 {
+	@screen lg {
+		@apply grid-cols-2;
+	}
+}
+
+.cols-3 {
+	@screen lg {
+		@apply grid-cols-2;
+	}
+
+	@screen xl {
+		@apply grid-cols-3;
+	}
+}
+
+.cols--color {
+	padding: clamp(1rem, 3vw, 2rem);
+	background: rgba(255, 255, 255, 0.58);
+	border: 1px solid var(--color-camp-line);
+	border-radius: var(--radius-card);
+
+	> .cols-col {
+		padding: clamp(1rem, 2vw, 1.5rem);
+		background: #fff;
+		border-radius: var(--radius-card);
+	}
+}

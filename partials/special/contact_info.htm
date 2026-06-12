@@ -1,0 +1,43 @@
+<div vocab="https://schema.org/" typeof="Organization">
+	<span property="name">{{ this.theme.schema_name|default("Konfi-Camp") }}</span><br />
+	<span>{{ this.theme.schema_description|default("Glaube, Gemeinschaft und Spaß fuer Konfis.") }}</span><br />
+	{% if this.theme.schema_street_address or this.theme.schema_postal_code or this.theme.schema_address_locality %}
+		<div property="address" typeof="PostalAddress">
+			<span property="streetAddress">{{ this.theme.schema_street_address }}</span><br />
+			<span property="postalCode">{{ this.theme.schema_postal_code }}</span>
+			<span property="addressLocality">{{ this.theme.schema_address_locality }}</span><br />
+			<span class="hidden" property="addressCountry">{{ this.theme.schema_adress_country }}</span><br />
+		</div>
+	{% endif %}
+
+	{% if this.theme.schema_telephone %}
+		<a
+			class="block"
+			href="tel:{{ this.theme.schema_telephone | replace({ '(0)': '', '-': '', ' ': '' }) }}"
+			property="telephone"
+		>
+			<span>{{ this.theme.schema_telephone }}</span>
+		</a>
+	{% endif %}
+
+	{% if this.theme.schema_email %}
+		<a
+			class="block"
+			href="mailto:{{ this.theme.schema_email }}"
+			property="email"
+		>
+			<span>{{ this.theme.schema_email }}</span>
+		</a>
+	{% endif %}
+	{% if this.theme.contact_parking %}
+	<span class="contact_info-info contact_info-info--parking">
+		<span>{{ this.theme.contact_parking | nl2br }}</span>
+	</span>
+	{% endif %}
+
+	{% if this.theme.contact_public_transport %}
+	<span class="contact_info-info contact_info-info--public_transport">
+		<span>{{ this.theme.contact_public_transport | nl2br }}</span>
+	</span>
+	{% endif %}
+</div>

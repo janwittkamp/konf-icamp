@@ -1,0 +1,15 @@
+[viewBag]
+title = "Call To Action"
+canHaveChildren = 0
+==
+{variable name="slogan" type="text" label="Slogan" comment="Der Slogan wir über dem Zitat angezeigt"}{/variable}
+{variable name="text" type="textarea" label="Text" comment="Der Text wird in großer Schrift angezeigt"}{/variable}
+{variable name="link.page" type="ContentPagePickerAllowEmpty" label="Link"}{/variable}
+{variable name="link.title" label="Button Text"}{/variable}
+
+{%
+	partial "templates/cta"
+	slogan=__SELF__.vars.slogan
+	text=__SELF__.vars.text
+	link=__SELF__.vars.link
+%}

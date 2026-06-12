@@ -1,0 +1,17 @@
+{%
+	partial "templates/section"
+	color="cream"
+	column_classes="section-contained section-cta"
+	body
+%}
+	<div class="cta">
+		<div class="cta-content">
+			<span class="cta-slogan">{{ slogan }}</span>
+			<span class="cta-text">{{ text }}</span>
+		</div>
+
+		{% if link.page and link.title %}
+			<a class="cta-button" href="{{ link.page | anyPage }}">{{ link.title }}</a>
+		{% endif %}
+	</div>
+{% endpartial %}

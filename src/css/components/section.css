@@ -1,0 +1,96 @@
+.section {
+	@apply relative;
+
+	padding: var(--section-padding-y) var(--section-padding-x);
+}
+
+.title-image + .section {
+	padding-top: clamp(3rem, 6vw, 5rem);
+}
+
+.section-less-py {
+	--section-padding-y: theme("spacing.4");
+}
+
+.section-cta {
+	margin-top: clamp(-4rem, -4vw, -2rem);
+	padding-top: clamp(1.5rem, 3vw, 2.5rem);
+	padding-bottom: clamp(2rem, 4vw, 3.25rem);
+}
+
+.section-no-py-after + .section {
+	@apply py-0;
+}
+
+.section-almost-white {
+	@apply bg-almost-white;
+}
+
+.section-cream,
+.section-gray-light-blue {
+	background: var(--color-camp-cream);
+}
+
+.section-sky {
+	background: var(--color-camp-sky);
+}
+
+.section-yellow,
+.section-primary-light,
+.section-blue-light {
+	background: var(--color-camp-yellow);
+	color: var(--color-camp-ink);
+}
+
+.section-red {
+	background: var(--color-camp-red);
+	color: #fff;
+
+	.fr-view a,
+	a {
+		color: #fff;
+	}
+}
+
+.section-forest {
+	background: var(--color-camp-forest);
+	color: #fff;
+}
+
+.section-secondary-dark {
+	background: var(--color-camp-ink);
+	color: var(--color-camp-cream);
+
+	.fr-view {
+		h1, h2, h3, h4, h5, h6 {
+			@apply text-white;
+		}
+	}
+}
+
+.section-primary-dark {
+	background: var(--color-camp-ink);
+	color: var(--color-camp-cream);
+
+	.fr-view {
+		h1, h2, h3, h4, h5, h6 {
+			color: #fff;
+		}
+
+		a {
+			@apply text-white;
+		}
+	}
+}
+
+.section-white {
+	@apply bg-white;
+}
+
+.section-contained {
+	> * {
+		max-width: 1240px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+}

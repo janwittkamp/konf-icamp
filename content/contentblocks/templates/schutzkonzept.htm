@@ -1,0 +1,26 @@
+[viewBag]
+title = "Schutzkonzept"
+canHaveChildren = 0
+==
+{variable type="text" name="kicker" label="Kicker"}{/variable}
+{variable type="text" name="title" label="Titel"}{/variable}
+{variable type="richeditor" name="text" label="Text"}{/variable}
+{variable type="text" name="stand" label="Stand / Hinweis"}{/variable}
+{variable type="text" name="primary_text" label="Primaerer Button Text" tab="Buttons"}{/variable}
+{variable type="text" name="primary_url" label="Primaerer Button URL" tab="Buttons"}{/variable}
+{variable type="text" name="secondary_text" label="Sekundaerer Button Text" tab="Buttons"}{/variable}
+{variable type="text" name="secondary_url" label="Sekundaerer Button URL" tab="Buttons"}{/variable}
+
+{% set vars = __SELF__.vars %}
+
+{%
+	partial "templates/schutzkonzept"
+	kicker=vars.kicker
+	title=vars.title
+	text=vars.text
+	stand=vars.stand
+	primary_text=vars.primary_text
+	primary_url=vars.primary_url
+	secondary_text=vars.secondary_text
+	secondary_url=vars.secondary_url
+%}

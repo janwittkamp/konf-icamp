@@ -1,0 +1,48 @@
+<div class="schutzkonzept-block">
+	<div class="schutzkonzept-block__mark" aria-hidden="true">
+		<svg class="schutzkonzept-block__icon" viewBox="0 0 64 64" focusable="false">
+			<path class="schutzkonzept-block__shield" d="M32 7.5 50 14.5v16.2c0 12.6-7.4 22.2-18 25.8-10.6-3.6-18-13.2-18-25.8V14.5L32 7.5Z"/>
+			<path class="schutzkonzept-block__check" d="M23.5 31.5 29 37l12.5-14"/>
+		</svg>
+	</div>
+
+	<div class="schutzkonzept-block__content">
+		{% if kicker %}
+			<span class="schutzkonzept-block__kicker">{{ kicker }}</span>
+		{% endif %}
+
+		{% if title %}
+			<h2 class="schutzkonzept-block__title">{{ title }}</h2>
+		{% endif %}
+
+		{% if text %}
+			<div class="schutzkonzept-block__text fr-view">
+				{{ text | raw }}
+			</div>
+		{% endif %}
+
+		{% if stand %}
+			<p class="schutzkonzept-block__stand">{{ stand }}</p>
+		{% endif %}
+	</div>
+
+	{% if primary_url or secondary_url %}
+		<div class="schutzkonzept-block__actions">
+			{% if primary_url and primary_text %}
+				<a
+					class="button button-primary"
+					href="{{ primary_url }}"
+					{% if primary_url|slice(0, 4) == "http" %}target="_blank" rel="noopener noreferrer"{% endif %}
+				>{{ primary_text }}</a>
+			{% endif %}
+
+			{% if secondary_url and secondary_text %}
+				<a
+					class="button"
+					href="{{ secondary_url }}"
+					{% if secondary_url|slice(0, 4) == "http" %}target="_blank" rel="noopener noreferrer"{% endif %}
+				>{{ secondary_text }}</a>
+			{% endif %}
+		</div>
+	{% endif %}
+</div>

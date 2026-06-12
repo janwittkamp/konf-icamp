@@ -1,0 +1,31 @@
+{% if hasImage %}
+	{%
+		partial "templates/content-with-image"
+
+		flipped=flipped
+		image=image
+		image_inset=image_inset
+
+		body
+	%}
+		<span class="text-with-images_slogan">{{ slogan }}</span>
+		<h2 class="text-with-images_title">{{ title }}</h2>
+		<div class="text-with-images_text">
+			{{ content | raw }}
+		</div>
+		{% if link and link_title %}
+			<a href="{{ link | anyPage }}" class="button text-with-images_link {% if button_left %}text-with-images_link--left{% endif %}">{{ link_title }}</a>
+		{% endif %}
+	{% endpartial %}
+{% else %}
+	<div>
+		<span class="text-with-images_slogan">{{ slogan }}</span>
+		<h2 class="text-with-images_title">{{ title }}</h2>
+		<div class="text-with-images_text">
+			{{ content | raw }}
+		</div>
+		{% if link and link_title %}
+			<a href="{{ link | anyPage }}" class="button text-with-images_link {% if button_left %}text-with-images_link--left{% endif %}">{{ link_title }}</a>
+		{% endif %}
+	</div>
+{% endif %}

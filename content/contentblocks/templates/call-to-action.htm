@@ -1,0 +1,23 @@
+[viewBag]
+title = "Call to Action Box"
+canHaveChildren = 0
+==
+
+{variable type="text" name="title" label="Titel"}{/variable}
+{variable type="richeditor" name="content" label="Inhalt"}{/variable}
+{variable type="text" name="buttontext" label="Button Text"}{/variable}
+{variable type="text" name="buttonurl" label="URL"}{/variable}
+
+{% set vars = __SELF__.vars %}
+{% set title = vars.title %}
+{% set content = vars.content %}
+{% set buttontext = vars.buttontext %}
+{% set buttonurl = vars.buttonurl %}
+
+{%
+    partial 'callToAction/default.htm'
+    title=title
+    content=content
+    buttontext=buttontext
+    buttonurl=buttonurl
+%}

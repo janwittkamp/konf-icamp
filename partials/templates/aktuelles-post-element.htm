@@ -1,0 +1,32 @@
+{% set category = post.categories|filter(c => c.slug != 'alle')|first|default(post.categories[0]) %}
+{% set image = post.featured_images[0] %}
+
+<article class="aktuelles-card">
+	{% if image %}
+		<a class="aktuelles-card-image" href="{{ post.url }}" aria-hidden="true" tabindex="-1">
+			{%
+				partial "common/resized-image"
+				image=image
+				image_alt=post.title
+				class_name="aktuelles-card-img"
+				sizes=[{w: 430, h: 270}]
+			%}
+		</a>
+	{% endif %}
+	<div class="aktuelles-card-body">
+		{% if post.published_at %}
+			<time class="aktuelles-card-date" datetime="{{ post.published_at|date('Y-m-d') }}">
+				{{ post.published_at|date('d. F Y') }}
+			</time>
+		{% endif %}
+		<h3 class="aktuelles-card-title">
+			<a href="{{ post.url }}">{{ post.title }}</a>
+		</h3>
+		{% if post.summary %}
+			<p class="aktuelles-card-text">{{ post.summary|striptags|truncate(160) }}</p>
+		{% elseif post.excerpt %}
+			<p class="aktuelles-card-text">{{ post.excerpt|striptags|truncate(160) }}</p>
+		{% endif %}
+		<a class="aktuelles-card-link" href="{{ post.url }}">Mehr lesen</a>
+	</div>
+</article>

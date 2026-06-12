@@ -1,0 +1,41 @@
+<span class="blog-post-question-form-heading">Sie haben Fragen zu diesem Artikel?</span>
+<form
+	class="blog-post-question-form"
+	id="blog-post-question-from-wrap"
+	data-request="BlogPostForm::onSubmit"
+	data-request-validate
+	data-request-update="'blogPost/blog-contact-sent': '#blog-post-question-from-wrap'"
+>
+	<label class="sr-only" for="blog-post-form-name">Ihr Name</label>
+	<input id="blog-post-form-name" type="text" name="name" placeholder="Name *" required/>
+	<div class="form-validate" data-validate-for="name"></div>
+	<label class="sr-only" for="blog-post-form-mail">Ihre E-Mail Adresse</label>
+	<input id="blog-post-form-mail" type="email" name="email" placeholder="E-Mail *" required/>
+	<div class="form-validate" data-validate-for="email"></div>
+	<label class="sr-only" for="blog-post-form-message">Ihre Nachricht</label>
+	<textarea id="blog-post-form-message" name="message" placeholder="Ihre Nachricht *" required rows="5"></textarea>
+	<div class="form-validate" data-validate-for="message"></div>
+
+	<label class="label-checkbox label-checkbox--check">
+		<input type="checkbox" name="check_message"/>
+		<span>
+			Wenn Sie ein Mensch sind, wählen Sie diese Checkbox nicht an.
+		</span>
+	</label>
+
+	<label class="label-checkbox">
+		<input type="checkbox" name="gdpr"/>
+		<span>
+			Ich habe die <a class="link" href="{{ 'datenschutz' | anyPage }}">Datenschutzerklärung</a> zur Kenntnis genommen.
+			Ich stimme zu, dass meine Angaben und Daten zur Beantwortung meiner Anfrage elektronisch erhoben und gespeichert werden.
+		</span>
+	</label>
+
+	<button
+		class="button button-sm blog-post-question-form-submit"
+		type="submit"
+		data-attach-loading
+	>
+		Anfrage senden
+	</button>
+</form>

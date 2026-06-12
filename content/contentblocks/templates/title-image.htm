@@ -1,0 +1,36 @@
+[viewBag]
+title = "Titelbild"
+canHaveChildren = 0
+==
+{variable type="text" name="title" label="Seitentitel" comment="Setzen Sie hier den Seitentitel, der groß auf dem Titelbild angezeigt wird."}{/variable}
+{variable type="text" name="subtitle" label="Untertitel" comment="Setzen Sie hier den Untertitel, der etwas kleiner unter dem Seitentitel angezeigt wird."}{/variable}
+{variable type="mediafinder" name="image" label="Bild" comment="Hinterlegen Sie hier das Bild, das angezeigt werden soll."}{/variable}
+{variable type="text" name="image_alt" label="Alternativtext" comment="Beschreiben Sie das Bild kurz (wichtig für Screenreader und Google-Indizierung)"}{/variable}
+{variable type="dropdown" name="layout" label="Layout" options="large:Groß|small:Klein"}{/variable}
+{variable type="text" name="primary_text" label="Primaerer Button Text" tab="Buttons"}{/variable}
+{variable type="text" name="primary_url" label="Primaerer Button URL" tab="Buttons"}{/variable}
+{variable type="text" name="secondary_text" label="Sekundaerer Button Text" tab="Buttons"}{/variable}
+{variable type="text" name="secondary_url" label="Sekundaerer Button URL" tab="Buttons"}{/variable}
+{repeater name="themes" prompt="Thema hinzufuegen" tab="Themen"}
+	{variable type="text" name="text" label="Text"}{/variable}
+{/repeater}
+
+{% set vars = __SELF__.vars %}
+{% set image = null %}
+{% if vars.image %}
+	{% set image = vars.image|slice(0, 7) == "assets/" ? (vars.image | theme) : (vars.image | media) %}
+{% endif %}
+
+{%
+	partial "templates/title-image.htm"
+	image=image
+	image_alt=vars.image_alt
+	title=vars.title
+	subtitle=vars.subtitle
+	layout=vars.layout
+	primary_text=vars.primary_text
+	primary_url=vars.primary_url
+	secondary_text=vars.secondary_text
+	secondary_url=vars.secondary_url
+	themes=vars.themes
+%}

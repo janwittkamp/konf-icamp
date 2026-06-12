@@ -1,0 +1,16 @@
+[viewBag]
+title = "Abschnitt"
+canHaveChildren = 1
+==
+{variable name="color" label="Farbe" type="dropdown" options="cream: Creme|white: Weiß|yellow: Gelb|red: Rot|sky: Himmelblau|forest: Gruen|primary-dark: Dunkel"}cream{/variable}
+{variable name="contained" label="Inhalt begrenzen" type="switch"}true{/variable}
+{%
+	partial "templates/section"
+	color=__SELF__.vars.color
+	column_classes=__SELF__.vars.contained ? "section-contained" : ""
+	body
+%}
+	{children}
+        {component}
+    {/children}
+{% endpartial %}

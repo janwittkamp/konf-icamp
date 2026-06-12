@@ -1,0 +1,135 @@
+html {
+	background: var(--color-camp-cream);
+	scroll-behavior: smooth;
+}
+
+:root {
+	--color-camp-red: #c4262f;
+	--color-camp-red-rgb: 196, 38, 47;
+	--color-camp-red-dark: #8f1723;
+	--color-camp-yellow: #ffd43d;
+	--color-camp-yellow-rgb: 255, 212, 61;
+	--color-camp-yellow-soft: #fff0b3;
+	--color-camp-cream: #fff8ec;
+	--color-camp-ink: #241b18;
+	--color-camp-ink-rgb: 36, 27, 24;
+	--color-camp-muted: #6d625d;
+	--color-camp-forest: #1e5a4b;
+	--color-camp-sky: #d8edf6;
+	--color-camp-line: rgba(36, 27, 24, 0.13);
+	--radius-card: 8px;
+	--shadow-soft: 0 24px 80px rgba(36, 27, 24, 0.12);
+}
+
+body {
+	background: var(--color-camp-cream);
+	@apply font-default text-gray-dark;
+	margin: 0;
+
+	--section-padding-x: theme("spacing.4");
+	--section-padding-y: theme("spacing.10");
+
+	word-break: break-word;
+	hyphens: auto;
+
+	@screen sm {
+		--section-padding-x: theme("spacing.8");
+	}
+	@screen md {
+		--section-padding-x: theme("spacing.8");
+	}
+	@screen lg {
+		--section-padding-y: theme("spacing.16");
+		--section-padding-x: theme("spacing.16");
+	}
+
+	@screen xl {
+		--section-padding-x: theme("spacing.20");
+	}
+}
+
+h1,
+h2 {
+	@apply font-heading;
+	letter-spacing: 0;
+	line-height: 0.98;
+}
+
+h2 {
+	@apply text-4xl;
+
+	@screen md {
+		@apply text-5xl;
+	}
+}
+
+h3 {
+	@apply font-heading;
+	letter-spacing: 0;
+}
+
+.fr-view a,
+.link {
+	color: var(--color-camp-red);
+	text-decoration-thickness: 2px;
+	text-underline-offset: 0.18em;
+
+	&:hover {
+		@apply underline;
+	}
+
+	&:focus {
+		@apply outline-none;
+		@apply ring ring-secondary-dark ring-offset-2 ring-opacity-50;
+	}
+}
+
+.image-link {
+	@apply relative inline-block cursor-pointer;
+
+	img {
+		@apply relative block m-0 z-10;
+	}
+
+	&:before {
+		content: "";
+
+		@apply absolute top-0 left-0 h-full w-full z-20;
+		@apply cursor-pointer;
+	}
+
+	> span {
+		@apply sr-only;
+	}
+}
+
+#main_content {
+	background: var(--color-camp-cream);
+}
+
+.main-container {
+	overflow: hidden;
+	background: var(--color-camp-cream);
+}
+
+.section-kicker {
+	display: block;
+	margin-bottom: 0.75rem;
+	color: var(--color-camp-red);
+	font-family: theme("fontFamily.heading");
+	font-size: 0.9rem;
+	font-weight: 800;
+	letter-spacing: 0;
+	text-transform: uppercase;
+}
+
+.section-lead {
+	max-width: 760px;
+	color: var(--color-camp-muted);
+	font-size: clamp(1.1rem, 1vw + 0.9rem, 1.35rem);
+	line-height: 1.6;
+}
+
+.camp-highlight {
+	background: linear-gradient(180deg, transparent 52%, var(--color-camp-yellow-soft) 52%);
+}

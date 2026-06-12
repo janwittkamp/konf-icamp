@@ -1,0 +1,7 @@
+[viewBag]
+title = "Aktuelle Beitraege"
+canHaveChildren = 0
+==
+{variable type="text" name="title" label="Titel"}Aktuelles aus dem Camp{/variable}
+{variable type="BlogCategoryPicker" name="category" label="Kategorie"}{/variable}
+{% partial "blog/morePosts.htm" title=__SELF__.vars.title category=__SELF__.vars.category %}

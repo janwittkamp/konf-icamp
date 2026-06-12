@@ -1,0 +1,21 @@
+<div class="text-with-images {% if flipped %}text-with-images--flipped{% endif %}">
+	<div class="text-with-images_content">
+		{{ body | raw }}
+	</div>
+
+	{% if image.image %}
+		{% set imageClass = ["text-with-images_image"] %}
+		{% set sizes = [{w: 640, h: 400}, {w: 900, h: 560, screenW: 1024}] %}
+		{% if image_inset %}
+			{% set imageClass = imageClass | merge(["text-with-images_image-inset"]) %}
+		{% endif %}
+		<div class="{{ imageClass | join(" ") }}">
+			{%
+				partial "common/resized-image"
+				image=image.image
+				image_alt=image.alt
+				sizes=sizes
+			%}
+		</div>
+	{% endif %}
+</div>

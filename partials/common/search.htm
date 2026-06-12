@@ -1,0 +1,11 @@
+<form action="{{ 'search' | page }}">
+	<label for="{{ __SELF__.id }}-search">
+		<span {% if not label %}class="sr-only"{% endif %}>
+			Suche:
+		</span>
+	</label>
+	<div class="input-with-button">
+		<input id="{{ __SELF__.id }}-search" class="no-margin" type="search" name="q" value="{{ InterweberSearchResults.getQuery() }}" placeholder="Suchbegriff" />
+		<button class="button search-submit no-margin" type="submit"><span class="sr-only">Suchen</span></button>
+	</div>
+</form>

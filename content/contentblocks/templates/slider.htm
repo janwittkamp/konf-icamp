@@ -1,0 +1,19 @@
+[viewBag]
+title = "Slider"
+canHaveChildren = 0
+==
+{variable type="text" name="title" label="Titel"}{/variable}
+{variable type="textarea" name="intro" label="Einleitung"}{/variable}
+{repeater name="slides" prompt="Slide hinzufuegen"}
+	{variable type="mediafinder" name="image" label="Bild"}{/variable}
+	{variable type="text" name="image_alt" label="Alternativtext"}{/variable}
+	{variable type="text" name="label" label="Label"}{/variable}
+	{variable type="text" name="slide_title" label="Titel"}{/variable}
+	{variable type="textarea" name="text" label="Text"}{/variable}
+{/repeater}
+
+{% partial "templates/slider"
+	title=__SELF__.vars.title
+	intro=__SELF__.vars.intro
+	slides=__SELF__.vars.slides
+%}

@@ -1,0 +1,62 @@
+url = "/aktuelles/:slug?/:page?|^[0-9]+"
+title = "Aktuelles"
+layout = "default"
+
+[blogPosts]
+categoryFilter = {{ :slug }}
+sortOrder = "published_at desc"
+masonry = true
+postsPerPage = 12
+==
+function onEnd() {
+	$slug = $this->param('slug');
+
+	$category = $this->components['blogPosts']->category;
+
+	if ($category) {
+		$this->page->meta_description = $category->description;
+	}
+
+	if (!$slug) {
+		$this->page->title = 'Aktuelles aus dem Konfi-Camp';
+
+		return;
+	}
+
+	if (!$category) {
+		$this->setStatusCode(404);
+		return $this->controller->run('404');
+	}
+
+	$this->page->title = 'Aktuelles in der Kategorie ' . $category->name;
+}
+==
+{% set title_image = this.theme.blog_title_image ? (this.theme.blog_title_image | media) : ("assets/images/konfi-camp/2025-konfis-4608.jpg" | theme) %}
+{% set title_image_alt = "Konfis stehen als Team zusammen" %}
+{%
+	partial "templates/title-image.htm"
+	image=title_image
+	image_alt=title_image_alt
+	title="Aktuelles"
+	subtitle="Neuigkeiten, Rückblicke und Geschichten aus dem Konfi-Camp"
+%}
+<div class="section section-less-py section-no-py-after">
+	<div class="category-search-wrap">
+		{% partial "templates/categories" current=blogPosts.category.id %}
+		<div class="category-search">
+			{% partial "common/search" %}
+		</div>
+	</div>
+</div>
+
+{%
+	partial "templates/section"
+	color="almost-white"
+	body
+%}
+	<div class="category">
+		<div class="category-posts">
+			{% component 'blogPosts' %}
+		</div>
+	</div>
+{% endpartial %}

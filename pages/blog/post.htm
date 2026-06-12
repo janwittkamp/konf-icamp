@@ -1,0 +1,46 @@
+url = "/aktuelles/beitrag/:slug"
+title = "Blog Beitrag"
+layout = "default"
+
+[blogPost]
+slug = {{ :slug }}
+[HandleForm BlogPostForm]
+form = "blog-contact-form"
+internal_blogPost = {{ post_url }}
+[blogCategories]
+==
+function onInit() {
+	$this->components['BlogPostForm']->setProperty(
+		'internal_blogPost',
+		$this->controller->currentPageUrl(['slug' => $this->param('slug')])
+	);
+}
+function onEnd() {
+	$post = $this->components['blogPost']->post;
+
+	if ($post) {
+		$this->page->title = $post->title;
+		$this->page->meta_description = $post->excerpt;
+	}
+}
+==
+{% set post = blogPost.post %}
+{% set category = post.categories|filter(c => c.slug != 'alle')|first  %}
+{% set image = post.featured_images[0] | default(this.theme.blog_title_image | media) %}
+
+<div class="blog-post-wrap">
+	{% component "blogPost" post_url=""|page({ slug: blogPost.post.slug }) %}
+	<div class="category-categories blog-post-sidebar">
+		<div class="blog-post-sidebar-search">
+			{% partial "common/search" %}
+		</div>
+
+		<div class="blog-post-sidebar-list">
+			{% partial "templates/categories" %}
+		</div>
+
+		<div class="blog-post-sidebar-contact">
+			{% partial "blogPost/blog-contact" %}
+		</div>
+	</div>
+</div>

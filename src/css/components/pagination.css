@@ -1,0 +1,64 @@
+.pagination {
+	@apply flex gap-2;
+
+	> li {
+		@apply relative;
+		@apply hidden;
+		@apply h-8 p-1 my-auto;
+
+		min-width: 2rem;
+
+		@apply bg-white;
+		@apply border border-secondary-dark;
+		@apply text-secondary-dark;
+
+		&:hover, &.active {
+			@apply bg-secondary-dark;
+			@apply text-white;
+		}
+
+		> span {
+			@apply cursor-default;
+		}
+
+		> a {
+			&:before {
+				content: "";
+				@apply absolute top-0 bottom-0 left-0 right-0;
+			}
+		}
+
+		&.disabled {
+			@apply bg-white text-secondary-dark;
+			@apply opacity-30;
+
+			> span {
+				@apply cursor-not-allowed;
+			}
+		}
+
+		&:first-child, &:last-child {
+			@apply flex items-center justify-center;
+		}
+
+		&:first-child {
+			@apply ml-0 mr-auto;
+
+			@screen md {
+				@apply mx-0;
+			}
+		}
+
+		&:last-child {
+			@apply ml-auto mr-0;
+
+			@screen md {
+				@apply mx-0;
+			}
+		}
+
+		@screen md {
+			@apply flex items-center justify-center;
+		}
+	}
+}

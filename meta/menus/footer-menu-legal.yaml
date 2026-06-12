@@ -1,0 +1,42 @@
+items:
+    -
+        title: Nachrichten
+        type: cms-page
+        code: ''
+        reference: blog/category
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: Kontakt
+        type: cms-page
+        code: ''
+        reference: kontakt
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: Impressum
+        nesting: 0
+        type: contentblocks-page
+        code: ''
+        reference: impressum
+        replace: 0
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: Datenschutz
+        nesting: 0
+        type: contentblocks-page
+        code: ''
+        reference: datenschutz
+        replace: 0
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+name: 'Footer Menü Legal'

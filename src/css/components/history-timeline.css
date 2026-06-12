@@ -1,0 +1,129 @@
+.history-timeline {
+	display: grid;
+	gap: 2rem;
+}
+
+.history-timeline-nowrap {
+	white-space: nowrap;
+}
+
+.history-timeline-header {
+	display: grid;
+	gap: 1rem;
+	max-width: 980px;
+
+	h2 {
+		color: var(--color-camp-ink);
+		font-size: 2.75rem;
+	}
+
+	p {
+		max-width: 760px;
+		color: var(--color-camp-muted);
+		font-size: 1.18rem;
+		line-height: 1.6;
+	}
+
+	@screen md {
+		h2 {
+			font-size: 4.25rem;
+		}
+	}
+}
+
+.history-timeline-list {
+	display: grid;
+	gap: 1rem;
+
+	@screen md {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	@screen xl {
+		grid-template-columns: repeat(5, minmax(0, 1fr));
+		align-items: stretch;
+	}
+}
+
+.history-timeline-item {
+	position: relative;
+	display: grid;
+	grid-template-rows: auto 1fr;
+	overflow: hidden;
+	min-width: 0;
+	background: #fff;
+	border: 1px solid var(--color-camp-line);
+	border-radius: var(--radius-card);
+	box-shadow: 0 18px 50px rgba(var(--color-camp-ink-rgb), 0.08);
+}
+
+.history-timeline-item:nth-child(2n) {
+	background: var(--color-camp-cream);
+}
+
+.history-timeline-image {
+	position: relative;
+	overflow: hidden;
+	aspect-ratio: 3 / 2;
+	background: var(--color-camp-ink);
+}
+
+.history-timeline-photo {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.history-timeline-content {
+	display: flex;
+	flex-direction: column;
+	gap: 0.85rem;
+	padding: 1.15rem;
+}
+
+.history-timeline-meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	align-items: center;
+}
+
+.history-timeline-year,
+.history-timeline-label {
+	display: inline-flex;
+	align-items: center;
+	min-height: 2rem;
+	border-radius: 999px;
+	font-family: theme("fontFamily.heading");
+	font-size: 0.84rem;
+	font-weight: 900;
+	line-height: 1;
+	letter-spacing: 0;
+}
+
+.history-timeline-year {
+	padding: 0.4rem 0.7rem;
+	background: var(--color-camp-red);
+	color: #fff;
+}
+
+.history-timeline-label {
+	padding: 0.35rem 0;
+	color: var(--color-camp-forest);
+	text-transform: uppercase;
+}
+
+.history-timeline-content h3 {
+	color: var(--color-camp-ink);
+	font-size: 1.65rem;
+	hyphens: none;
+	line-height: 1.05;
+	word-break: normal;
+}
+
+.history-timeline-content p {
+	color: var(--color-camp-muted);
+	font-size: 1rem;
+	line-height: 1.55;
+}

@@ -1,0 +1,12 @@
+[blogPosts]
+postsPerPage = 6
+disablePagination = true
+categoryFilter = {{category}}
+sortOrder = "published_at desc"
+masonry = false
+==
+<div class="blog-more-posts-wrap">
+	<h2 class="blog-more-posts-title">{{ title | default("Weitere Artikel") }}</h2>
+
+	{% component "blogPosts" %}
+</div>

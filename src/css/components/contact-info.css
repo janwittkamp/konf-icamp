@@ -1,0 +1,51 @@
+a.contact_info-info {
+	@apply border border-transparent;
+
+	> span {
+		border-bottom: 1px solid var(--color-camp-red);
+	}
+
+	&:hover {
+		@apply no-underline !important;
+		border-color: var(--color-camp-red);
+
+		> span {
+			@apply text-white;
+			background: var(--color-camp-red);
+		}
+	}
+}
+
+.contact_info-info {
+	@apply inline-flex transition-colors my-2 pl-2 -ml-2;
+	@apply text-base leading-tight;
+
+	> span {
+		@apply transition-colors;
+		@apply p-2;
+	}
+
+
+	&:before {
+		content: "";
+
+		@apply h-6 w-6 mt-1.5 mr-2;
+		@apply bg-contain bg-center bg-no-repeat;
+	}
+}
+
+.contact_info-info--telephone:before {
+	background-image: url("../../images/icons/telephone.svg")
+}
+
+.contact_info-info--email:before {
+	background-image: url("../../images/icons/email.svg")
+}
+
+.contact_info-info--parking:before {
+	background-image: url("../../images/icons/parking.svg")
+}
+
+.contact_info-info--public_transport:before {
+	background-image: url("../../images/icons/public_transport.svg")
+}

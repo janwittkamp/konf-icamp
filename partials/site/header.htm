@@ -1,0 +1,64 @@
+[staticMenu headerMenu]
+code = "header-menu"
+==
+<header class="header">
+	<a class="header-logo-wrap" href="/">
+		<span class="header-logo-mark" aria-hidden="true">
+			<span>K</span>
+			<span>C</span>
+		</span>
+		<span class="header-logo-text">
+			<span>Konfi-Camp</span>
+			<span class="header-logo-sub">erleben &amp; lernen</span>
+		</span>
+		<span class="sr-only">Zur Startseite</span>
+	</a>
+	<button hidden aria-hidden="true" tabindex="-1" class="header-trigger-nav">
+		<span class="sr-only">Menü</span>
+	</button>
+	<nav class="header-nav-wrapper">
+		<ul class="header-nav">
+			{% for item in headerMenu.menuItems %}
+				<li class="header-nav-item">
+					{% set className = "header-nav-item-link" %}
+					{% if item.isActive or item.isChildActive %}
+						{% set className = className ~ " header-nav-item-link--active" %}
+					{% endif %}
+
+					{% if item.items | length %}
+						{% set className = className ~ " header-nav-item-link--children" %}
+					{% endif %}
+
+					<a href="{{ item.url }}" class="{{ className }}">
+						<span class="header-nav-item-link-content">
+							{{ item.title }}
+						</span>
+					</a>
+
+					{% if item.items %}
+						<ul class="header-nav-item-dropdown">
+							{% for child in item.items %}
+								<li class="header-nav-item-dropdown-item">
+									{% set className = "header-nav-item-dropdown-item-link" %}
+									{% if child.isActive or child.isChildActive %}
+										{% set className = className ~ " header-nav-item-dropdown-item-link--active" %}
+									{% endif %}
+
+									<a
+										href="{{ child.url }}"
+										class="{{ className }}"
+									>
+										{{ child.title }}
+									</a>
+								</li>
+							{% endfor %}
+						</ul>
+					{% endif %}
+				</li>
+			{% endfor %}
+			<li class="header-nav-item header-nav-item--button">
+				<a href="/kontakt" class="button button-primary">Kontakt</a>
+			</li>
+		</ul>
+	</nav>
+</header>

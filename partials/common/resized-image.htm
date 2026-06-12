@@ -1,0 +1,24 @@
+{% set imageType = getImageType(image) %}
+
+{% if imageType == "image/svg+xml" %}
+	<img src="{{ image }}" class="{{ class_name }}" loading="lazy" />
+{% else %}
+	{% if imageType == "image/png" %}
+		{% set defaultType = "png" %}
+	{% else %}
+		{% set defaultType = "jpg" %}
+	{% endif %}
+
+	{%
+		partial "common/_resized-image"
+		image=image
+		image_alt=image_alt
+		mode=mode
+		class_name=class_name
+		dimensions=dimensions
+		filterSizes=filterSizes
+		sizes=sizes
+		types=types
+		defaultType=defaultType
+	%}
+{% endif %}

@@ -1,0 +1,26 @@
+<div class="person">
+	<div class="person-meta">
+		{%
+			partial "common/resized-image"
+			image=image
+			image_alt="Foto von " ~ name
+			sizes=[{h: 450, w: 290}]
+			class_name="person-image"
+		%}
+
+		<ul class="person-jobs">
+			{% for job in jobs %}
+				<li class="person-job">{{ job.title }}</li>
+			{% endfor %}
+		</ul>
+	</div>
+	<div class="person-info">
+		<h3 class="person-name">{{ name }}</h3>
+		<div class="person-description">
+			{{ description | raw }}
+		</div>
+		<div class="person-email-wrap">
+			<a href="mailto:{{ email }}" class="person-email">{{ email }}</a>
+		</div>
+	</div>
+</div>

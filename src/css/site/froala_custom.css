@@ -1,0 +1,164 @@
+.fr-view {
+	@apply text-lg leading-relaxed;
+
+	h1, h2, h3, h4 {
+		@apply font-heading;
+		@apply text-primary-dark;
+
+		&:first-child {
+			@apply mt-0;
+		}
+	}
+
+	h1 {
+		@apply text-5xl mb-4;
+		letter-spacing: 0;
+	}
+
+	h2 {
+		@apply text-4xl mt-6 mb-4;
+		letter-spacing: 0;
+
+		&:first-child {
+			@apply mt-0;
+		}
+	}
+
+	h3 {
+		@apply text-2xl mt-6 mb-1;
+	}
+
+	h4 {
+		@apply text-lg mb-1;
+	}
+
+	p {
+		@apply mb-4;
+
+		& + h1,
+		& + h2,
+		& + h3 {
+			@apply mt-6;
+		}
+
+		&:last-child {
+			@apply mb-0;
+		}
+	}
+
+    img, span {
+        &.fr-dii {
+            &.fr-fir, &.fr-fil {
+				@apply float-none block m-6;
+            }
+
+			@screen sm {
+				&.fr-fir {
+					@apply float-right ml-4;
+				}
+
+				&.fr-fil {
+					@apply float-left mr-4;
+				}
+			}
+        }
+    }
+
+	&:before, &:after {
+		content: "";
+		display: table;
+	}
+
+	&:after {
+		clear: both;
+	}
+
+	ul, ol {
+		@apply my-6 pl-6;
+	}
+
+	ul {
+		@apply list-disc list-outside;
+	}
+
+	ol {
+		@apply list-decimal list-outside;
+	}
+
+	iframe {
+		@apply my-4;
+	}
+
+	a {
+		&:hover {
+			@apply underline;
+		}
+	}
+
+	table {
+		th,
+		td {
+			@apply p-2;
+			@apply border border-secondary-dark;
+		}
+	}
+}
+
+.legal-copy {
+	max-width: 900px;
+	padding: clamp(1.5rem, 4vw, 3rem);
+	background: #fff;
+	border: 1px solid var(--color-camp-line);
+	border-radius: var(--radius-card);
+	box-shadow: var(--shadow-soft);
+	color: var(--color-camp-ink);
+
+	h2 {
+		color: var(--color-camp-red);
+		font-size: clamp(1.7rem, 3vw, 2.4rem);
+	}
+
+	p,
+	li {
+		color: var(--color-camp-muted);
+	}
+}
+
+.audience-copy {
+	max-width: 980px;
+	padding: clamp(1.4rem, 4vw, 3rem);
+	background: #fff;
+	border: 1px solid var(--color-camp-line);
+	border-radius: var(--radius-card);
+	box-shadow: var(--shadow-soft);
+	color: var(--color-camp-ink);
+
+	h2 {
+		color: var(--color-camp-red);
+		font-size: clamp(1.85rem, 3vw, 2.65rem);
+	}
+
+	h3 {
+		color: var(--color-camp-ink);
+	}
+
+	p,
+	li {
+		color: var(--color-camp-muted);
+	}
+
+	.audience-note {
+		padding: 1rem 1.15rem;
+		background: rgba(var(--color-camp-yellow-rgb), 0.26);
+		border-left: 5px solid var(--color-camp-yellow);
+		border-radius: 0 var(--radius-card) var(--radius-card) 0;
+		color: var(--color-camp-ink);
+	}
+
+	.audience-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.8rem;
+		margin-top: 1.5rem;
+	}
+}

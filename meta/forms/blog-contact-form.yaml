@@ -1,0 +1,59 @@
+name: 'Frage zu Blog Artikel'
+code: 'blog-contact-form'
+mailTo: 'info@konfi-camp.de'
+mailSubject: 'Neue Anfrage zu Artikel - Konfi-Camp'
+internalFields:
+  blogPost:
+    type: 'text'
+    mailLabel: 'Betreffender Artikel'
+fields:
+  name:
+    type: 'text'
+    label: 'Name'
+    mailLabel: 'Name'
+    placeholder: 'Vor- und Nachname'
+    comment: ''
+    required: true
+    validationRules:
+      - 'required'
+    validationMessages:
+      required: 'Bitte geben Sie Ihren Namen an.'
+  email:
+    type: 'email'
+    label: 'E-Mail'
+    mailLabel: 'E-Mail'
+    placeholder: 'name@email.de'
+    comment: ''
+    required: true
+    validationRules:
+      - 'required'
+      - 'email'
+    validationMessages:
+      required: 'Bitte geben Sie Ihre E-Mail Adresse an.'
+      email: 'Bitte geben Sie eine gültige E-Mail Adresse an.'
+  message:
+    type: 'textarea'
+    label: 'Nachricht'
+    mailLabel: 'Nachricht'
+    placeholder: 'Ich habe eine Frage zum Konfi-Camp ...'
+    comment: ''
+    required: true
+    validationRules:
+      - 'required'
+    validationMessages:
+      required: 'Bitte geben Sie eine Nachricht ein.'
+  gdpr:
+    type: 'checkbox'
+    required: true
+    translations:
+      active: Ja
+      inactive: Nein
+    label: |
+      Ich habe die Datenschutzerklärung zur Kenntnis genommen.
+      Ich stimme zu, dass meine Angaben und Daten zur Beantwortung meiner Anfrage elektronisch erhoben und gespeichert werden.
+    mailLabel: Datenschutz akzeptiert
+  check_message:
+    type: 'checkbox'
+    is_honeypot: true
+    mailLabel: 'Spambot Falle aktiviert'
+    label: 'Wenn Sie ein Mensch sind, wählen Sie diese Checkbox nicht.'
