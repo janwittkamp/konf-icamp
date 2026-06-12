@@ -3,6 +3,7 @@ import "./styles"
 import "./js/mobile-nav"
 import observeDeferredImages from "./js/deferImages"
 import initContentSliders from "./js/content-slider"
+import initMediaLightbox from "./js/media-lightbox"
 
 if (!checkWebp()) {
 	document.documentElement.classList.remove("webp")
@@ -10,6 +11,7 @@ if (!checkWebp()) {
 
 observeDeferredImages()
 initContentSliders()
+initMediaLightbox()
 
 // enable the following lines to enable the privacy popup
 

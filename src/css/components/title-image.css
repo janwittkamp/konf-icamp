@@ -146,7 +146,7 @@
 
 .title-image--small .title-image-heading {
 	max-width: min(1120px, 82vw);
-	font-size: clamp(3.2rem, 7vw, 6.35rem);
+	font-size: clamp(3.05rem, 6.1vw, 5.7rem);
 	line-height: 0.95;
 }
 
@@ -201,6 +201,40 @@
 	box-shadow: 0 12px 28px rgba(var(--color-camp-ink-rgb), 0.16);
 }
 
+@media (max-width: 1240px) {
+	.title-image--small .title-image-accent {
+		right: clamp(-5.5rem, -6vw, -2.75rem);
+		bottom: clamp(0.75rem, 3vw, 2rem);
+		width: clamp(7rem, 13vw, 10rem);
+		height: clamp(7rem, 13vw, 10rem);
+
+		&:after {
+			font-size: clamp(2.85rem, 5vw, 4.35rem);
+		}
+	}
+}
+
+@media (max-width: 760px) {
+	.title-image--small .title-image-accent {
+		right: -4.4rem;
+		bottom: -0.75rem;
+		width: 6.5rem;
+		height: 6.5rem;
+		box-shadow:
+			-0.65rem 0.65rem 0 rgba(var(--color-camp-red-rgb), 0.34),
+			0 16px 34px rgba(var(--color-camp-ink-rgb), 0.16);
+
+		&:after {
+			font-size: 2.9rem;
+		}
+	}
+
+	.title-image--small .title-image-subheading {
+		max-width: min(100%, 34rem);
+		font-size: clamp(1.1rem, 3.8vw, 1.45rem);
+	}
+}
+
 @media (max-width: 480px) {
 	.title-image-heading {
 		font-size: clamp(2.75rem, 13vw, 3.5rem);
@@ -214,8 +248,8 @@
 	}
 
 	.title-image--small .title-image-accent {
-		right: -0.25rem;
-		bottom: -1.25rem;
+		right: -2.15rem;
+		bottom: -1.45rem;
 		width: 4.9rem;
 		height: 4.9rem;
 		box-shadow:

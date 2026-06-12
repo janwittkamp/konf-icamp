@@ -113,12 +113,18 @@ function mapMediaImages($items, $yearKey)
 
     foreach ($items as $item) {
         $fileName = basename($item->path);
+        $diskPath = storage_path('app/media' . $item->path);
+
+        if (!is_file($diskPath)) {
+            continue;
+        }
+
         $detectedInfo = $this->detectImageArchiveInfo($fileName);
         $fileInfo = $imageInfo[$fileName] ?? [];
         $tag = $fileInfo['tag'] ?? $detectedInfo['tag'] ?? '';
         $day = $fileInfo['day'] ?? $detectedInfo['day'] ?? '';
-        $activity = $fileInfo['activity'] ?? $detectedInfo['activity'] ?? '';
-        $title = $activity ?: $this->formatMediaTitle(pathinfo($item->title, PATHINFO_FILENAME));
+        $activity = $this->formatMediaTitle($fileInfo['activity'] ?? $detectedInfo['activity'] ?? '', false);
+        $title = $activity ?: 'Konfi-Camp ' . $yearKey;
 
         $images[] = [
             'title' => $title,
@@ -278,8 +284,9 @@ function detectImageArchiveInfo($fileName)
         }
     }
 
-    $activity = preg_replace('/\b(20\d{2}|tag|montag|dienstag|mittwoch|donnerstag|freitag|samstag|sonntag|dsc\d+|img\d+|6t1a\d+|\d{3,})\b/i', ' ', $baseName);
-    $activity = $this->formatMediaTitle($activity);
+    $activityBase = preg_replace('/[_.-]+/', ' ', $baseName);
+    $activity = preg_replace('/\b(20\d{2}|tag|montag|dienstag|mittwoch|donnerstag|freitag|samstag|sonntag|max|dsc|img|6t1a|\d+)\b/i', ' ', $activityBase);
+    $activity = $this->formatMediaTitle($activity, false);
 
     if ($activity && strlen($activity) > 2) {
         $info['activity'] = $activity;
@@ -332,12 +339,12 @@ function getCampDaySortValue($day)
     return $days[$day] ?? 999;
 }
 
-function formatMediaTitle($title)
+function formatMediaTitle($title, $fallback = true)
 {
     $title = trim(str_replace(['_', '-'], ' ', (string) $title));
     $title = preg_replace('/\s+/', ' ', $title);
 
-    return $title ?: 'Konfi-Camp';
+    return $title ?: ($fallback ? 'Konfi-Camp' : '');
 }
 ==
 {% set hero_image = "assets/images/konfi-camp/2025-abend-4322.jpg" | theme %}
@@ -357,7 +364,7 @@ function formatMediaTitle($title)
 			<h2>Momente, die bleiben</h2>
 			<p>
 				Für Eltern, Gruppen und Gemeinden: Hier sammeln wir Bilder und Videos aus den Camp-Jahren.
-				Das Archiv kann Jahr für Jahr ergänzt werden.
+				Das Archiv wird Jahr für Jahr ergänzt.
 			</p>
 		</header>
 
@@ -423,19 +430,27 @@ function formatMediaTitle($title)
 						<section class="media-gallery-section" id="bilder">
 							<h3>Bilder</h3>
 							<div class="media-gallery-grid">
-								{% for image in year.images|slice(0, mediaArchive.selectedYear ? 99 : 12) %}
-									<a class="media-gallery-item" href="{{ image.url }}" target="_blank" rel="noopener">
+								{% for image in year.images|slice(0, mediaArchive.selectedYear ? year.imageCount : 12) %}
+									<a
+										class="media-gallery-item"
+										href="{{ image.url }}"
+										target="_blank"
+										rel="noopener"
+										data-media-lightbox
+										data-media-src="{{ image.url }}"
+										data-media-title="{{ image.title|e('html_attr') }}"
+										data-media-meta="{% if image.tag %}{{ image.tag|e('html_attr') }}{% endif %}{% if image.tag and image.day %} • {% endif %}{% if image.day %}{{ image.day|e('html_attr') }}{% endif %}"
+									>
 										<img src="{{ image.url }}" alt="{{ image.title }}" loading="lazy">
 										<span class="media-gallery-caption">
 											{% if image.tag or image.day %}
 												<small class="media-gallery-meta">
-													{% if image.tag %}<em>{{ image.tag }}</em>{% endif %}
-													{% if image.day %}<em>{{ image.day }}</em>{% endif %}
+													{% if image.tag %}{{ image.tag }}{% endif %}{% if image.tag and image.day %}•{% endif %}{% if image.day %}{{ image.day }}{% endif %}
 												</small>
 											{% endif %}
-											<strong>
-												{% if image.activity %}{{ image.activity }}{% else %}{{ image.title }}{% endif %}
-											</strong>
+											{% if image.activity %}
+												<strong>{{ image.activity }}</strong>
+											{% endif %}
 										</span>
 									</a>
 								{% endfor %}
