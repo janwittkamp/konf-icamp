@@ -53,7 +53,7 @@ items:
                     cssClass: ''
                     isExternal: '0'
             -
-                title: Eltern
+                title: Erziehungsberechtigte
                 nesting: null
                 type: url
                 url: /eltern
