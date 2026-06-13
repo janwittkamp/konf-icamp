@@ -1,11 +1,22 @@
-<form action="{{ 'search' | page }}">
-	<label for="{{ __SELF__.id }}-search">
+{% set searchAction = action|default('search' | page) %}
+{% set searchName = queryParam|default('q') %}
+{% set searchId = searchId|default(searchName ~ '-search') %}
+{% if queryValue is defined %}
+	{% set searchValue = queryValue %}
+{% elseif InterweberSearchResults is defined %}
+	{% set searchValue = InterweberSearchResults.getQuery() %}
+{% else %}
+	{% set searchValue = '' %}
+{% endif %}
+
+<form action="{{ searchAction }}">
+	<label for="{{ searchId }}">
 		<span {% if not label %}class="sr-only"{% endif %}>
 			Suche:
 		</span>
 	</label>
 	<div class="input-with-button">
-		<input id="{{ __SELF__.id }}-search" class="no-margin" type="search" name="q" value="{{ InterweberSearchResults.getQuery() }}" placeholder="Suchbegriff" />
+		<input id="{{ searchId }}" class="no-margin" type="search" name="{{ searchName }}" value="{{ searchValue }}" placeholder="Suchbegriff" />
 		<button class="button search-submit no-margin" type="submit"><span class="sr-only">Suchen</span></button>
 	</div>
 </form>

@@ -44,7 +44,8 @@ function onEnd() {
 	<div class="category-search-wrap">
 		{% partial "templates/categories" current=blogPosts.category.id %}
 		<div class="category-search">
-			{% partial "common/search" %}
+			{% set searchAction = "blog/category"|page({ slug: blogPosts.category.slug|default("") }) %}
+			{% partial "common/search" action=searchAction queryParam="search" queryValue=input("search") searchId="aktuelles-search" %}
 		</div>
 	</div>
 </div>

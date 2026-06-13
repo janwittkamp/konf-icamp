@@ -1,0 +1,171 @@
+@view-transition {
+	navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+	animation-duration: 320ms;
+	animation-timing-function: cubic-bezier(0.2, 0, 0.2, 1);
+}
+
+::view-transition-old(root) {
+	animation-name: camp-page-out;
+}
+
+::view-transition-new(root) {
+	animation-name: camp-page-in;
+}
+
+.site-header,
+.title-image,
+.blog-post-hero {
+	view-transition-name: none;
+}
+
+@keyframes camp-page-out {
+	from {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	to {
+		opacity: 0;
+		transform: translateY(-10px);
+	}
+}
+
+@keyframes camp-page-in {
+	from {
+		opacity: 0;
+		transform: translateY(14px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@keyframes camp-scroll-rise {
+	from {
+		opacity: 0.18;
+		transform: translateY(42px) scale(0.98);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
+}
+
+@keyframes camp-scroll-soft-image {
+	from {
+		opacity: 0.55;
+		transform: translateY(28px) scale(0.985);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
+}
+
+@supports (animation-timeline: view()) {
+	.section-contained > *,
+	.camp-slider,
+	.text-with-cta,
+	.image-with-quote,
+	.history-timeline,
+	.schutzkonzept-card,
+	.faq,
+	.contact-info,
+	.contact-form,
+	.cta,
+	.blog-more-posts-wrap,
+	.blog-post-content,
+	.aktuelles-block-header,
+	.audience-copy,
+	.legal-copy,
+	.media-archive-header,
+	.media-year-nav,
+	.media-overview-card {
+		animation-duration: 1s;
+		animation-fill-mode: both;
+		animation-name: camp-scroll-rise;
+		animation-timing-function: cubic-bezier(0.2, 0, 0.2, 1);
+		animation-timeline: view();
+		animation-range: entry 0% cover 32%;
+		transform-origin: 50% 72%;
+		will-change: opacity, transform;
+	}
+
+	.blog-posts-post,
+	.aktuelles-card,
+	.media-gallery-item,
+	.media-video-card,
+	.history-timeline-item {
+		animation-duration: 1s;
+		animation-fill-mode: both;
+		animation-name: camp-scroll-soft-image;
+		animation-timing-function: cubic-bezier(0.2, 0, 0.2, 1);
+		animation-timeline: view();
+		animation-range: entry 0% cover 28%;
+		transform-origin: 50% 78%;
+		will-change: opacity, transform;
+	}
+
+	.blog-posts-post:nth-child(3n + 2),
+	.aktuelles-card:nth-child(3n + 2),
+	.media-gallery-item:nth-child(4n + 2),
+	.media-video-card:nth-child(3n + 2) {
+		animation-range: entry 4% cover 32%;
+	}
+
+	.blog-posts-post:nth-child(3n),
+	.aktuelles-card:nth-child(3n),
+	.media-gallery-item:nth-child(4n + 3),
+	.media-video-card:nth-child(3n) {
+		animation-range: entry 8% cover 36%;
+	}
+
+	.media-gallery-item:nth-child(4n) {
+		animation-range: entry 12% cover 40%;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	@view-transition {
+		navigation: none;
+	}
+
+	::view-transition-old(root),
+	::view-transition-new(root),
+	.section-contained > *,
+	.camp-slider,
+	.text-with-cta,
+	.image-with-quote,
+	.history-timeline,
+	.schutzkonzept-card,
+	.faq,
+	.contact-info,
+	.contact-form,
+	.cta,
+	.blog-more-posts-wrap,
+	.blog-post-content,
+	.aktuelles-block-header,
+	.aktuelles-card,
+	.audience-copy,
+	.legal-copy,
+	.media-archive-header,
+	.media-year-nav,
+	.media-overview-card,
+	.blog-posts-post,
+	.media-gallery-item,
+	.media-video-card,
+	.history-timeline-item {
+		animation: none;
+		opacity: 1;
+		transform: none;
+		filter: none;
+	}
+}

@@ -4,7 +4,7 @@
 
 <div class="blog-posts">
 	{% for post in posts %}
-		{% set category = post.categories|filter(c => c.slug != 'alle')|first  %}
+		{% set category = post.categories|filter(c => c.slug != 'alle' and c.slug != 'aktuelles' and c.slug != 'uncategorized')|first|default(post.categories|filter(c => c.slug != 'alle')|first)|default(post.categories[0]) %}
 		{% set image = post.featured_images[0] %}
 
 		<div class="blog-posts-post">
