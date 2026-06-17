@@ -118,6 +118,19 @@ items:
                     cssClass: ''
                     isExternal: '0'
     -
+        title: Trainee
+        nesting: null
+        type: url
+        url: /trainee
+        code: ''
+        reference: null
+        cmsPage: null
+        replace: null
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
         title: Media
         nesting: null
         type: url

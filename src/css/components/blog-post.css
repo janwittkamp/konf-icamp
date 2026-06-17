@@ -4,9 +4,12 @@
 	background: var(--color-camp-cream);
 
 	@screen xl {
+		width: min(1640px, calc(100% - (var(--section-padding-x) * 2)));
+		margin-right: auto;
+		margin-left: auto;
 		grid-template-columns: minmax(0, 1fr) minmax(300px, 380px);
 		align-items: start;
-		padding: clamp(1.25rem, 3vw, 2rem) var(--section-padding-x) clamp(3rem, 6vw, 5rem);
+		padding: clamp(1.25rem, 3vw, 2rem) 0 clamp(3rem, 6vw, 5rem);
 	}
 }
 
@@ -235,6 +238,14 @@
 		top: 6rem;
 		margin: 0;
 		padding: 0;
+	}
+}
+
+.blog-post-wrap .blog-post-sidebar {
+	@screen xl {
+		width: auto;
+		min-width: 0;
+		margin: 0;
 	}
 }
 

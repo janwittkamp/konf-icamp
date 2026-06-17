@@ -170,7 +170,8 @@ function mapMediaVideos($items)
 
     foreach ($items as $item) {
         $filename = pathinfo($item->title, PATHINFO_FILENAME);
-        $parts = explode(',', $filename);
+        $parts = array_map('trim', explode(',', $filename));
+        $sortKey = $parts[0] ?? $filename;
         $title = $parts[2] ?? $filename;
         $day = $parts[3] ?? '';
 
@@ -179,8 +180,23 @@ function mapMediaVideos($items)
             'day' => $this->formatMediaTitle($day),
             'url' => $item->publicUrl,
             'poster' => $this->findVideoPoster($item->path),
-            'path' => $item->path
+            'path' => $item->path,
+            'sortKey' => $sortKey,
+            'sortFile' => basename($item->path)
         ];
+    }
+
+    usort($videos, function ($left, $right) {
+        $sortCompare = strnatcasecmp($left['sortKey'], $right['sortKey']);
+        if ($sortCompare !== 0) {
+            return $sortCompare;
+        }
+
+        return strnatcasecmp($left['sortFile'], $right['sortFile']);
+    });
+
+    foreach ($videos as &$video) {
+        unset($video['sortKey'], $video['sortFile']);
     }
 
     return $videos;
